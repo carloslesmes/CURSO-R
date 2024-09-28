@@ -1,0 +1,113 @@
+---
+title: "Quiz on Vectors, Matrices, and Dataframes in R"
+author: "Carlos Lesmes"
+format: pdf
+---
+
+
+**Your name** : ___________________________
+
+# Quiz: Vectors, Matrices, and Dataframes in R
+
+### Instructions
+Answer all questions. Each question is worth 1 point.
+
+## Multiple Choice Questions (MCQs)
+
+1. **Which function is used to create a vector in R?**
+    - a) `matrix()`
+    - b) `vector()`
+    - c) `data.frame()`
+    - d) `c()`
+
+2. **What will be the result of `length(c(1, 2, 3, 4, 5))`?**
+    - a) 4
+    - b) 5
+    - c) 6
+    - d) 1
+
+3. **How can you combine two vectors `a` and `b` into a single vector in R?**
+    - a) `a + b`
+    - b) `rbind(a, b)`
+    - c) `c(a, b)`
+    - d) `combine(a, b)`
+
+4. **Which function is used to create a matrix in R?**
+    - a) `vector()`
+    - b) `matrix()`
+    - c) `data.frame()`
+    - d) `mat()`
+
+5. **What is the output of `dim(matrix(1:6, nrow = 2))`?**
+    - a) `(2, 6)`
+    - b) `(3, 3)`
+    - c) `(2, 3)`
+    - d) `(3, 2)`
+
+6. **How can you access the element in the second row and third column of a matrix `m`?**
+    - a) `m[2, 3]`
+    - b) `m(2, 3)`
+    - c) `m[3, 2]`
+    - d) `m(3, 2)`
+
+7. **What is the default type of a vector created by `c(1, 2, 3)`?**
+    - a) Character
+    - b) Logical
+    - c) Numeric
+    - d) Integer
+
+8. **Which function converts a vector into a factor in R?**
+    - a) `factor()`
+    - b) `as.factor()`
+    - c) `as.vector()`
+    - d) `levels()`
+
+9. **How do you add a column to a dataframe `df` with a vector `v`?**
+    - a) `df + v`
+    - b) `df <- cbind(df, v)`
+    - c) `df <- rbind(df, v)`
+    - d) `df[v] <- v`
+
+10. **Which of the following is TRUE about dataframes in R?**
+    - a) Dataframes can hold different types of data in each column.
+    - b) Dataframes can only hold numeric data.
+    - c) Dataframes can have only one row.
+    - d) All columns in a dataframe must be of the same type.
+
+## True or False Questions
+
+11. **Vectors in R can only contain numeric data.**
+    - True
+    - False
+
+12. **Matrices in R can have both rows and columns of different lengths.**
+    - True
+    - False
+
+13. **Dataframes are essentially lists of equal-length vectors.**
+    - True
+    - False
+
+14. **In a dataframe, each column must contain data of the same type.**
+    - True
+    - False
+
+15. **You can name the rows and columns of a matrix in R.**
+    - True
+    - False
+
+## Short Answer Questions
+
+16. **Write the R code to create a vector with elements 2, 4, 6, and 8.**
+
+17. **Write the R code to create a 3x3 matrix with values from 1 to 9.**
+
+18. **How do you convert a matrix `m` to a dataframe in R?**
+
+19. **Create a dataframe `df` with two columns: `age` (numeric) and `name` (character) with at least 3 rows.**
+
+20. **How can you calculate the sum of all elements in a vector `v`?**
+
+---
+
+*End of Quiz*

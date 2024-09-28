@@ -1,0 +1,154 @@
+---
+title: "Modificando los títulos, los ejes, el fondo y la grilla"
+subtitle: "Anotaciones, leyendas en un gráfico de ggplot2"
+author: "Carlos Lesmes"
+theme: materia
+date: "`r Sys.Date()`"
+toc: true
+number-sections: true
+format: 
+  html:
+    df-print: kable
+    code-fold: show  
+lang: es
+---
+
+# Elementos básicos
+
+Primero creamos un `dataframe`y activamos el paquete `ggplot2`
+
+```{r}
+library(ggplot2)
+set.seed(1234)
+datos <- data.frame(
+  x = 1:10,   
+  y = c(2, 3, 5, 7, 11, 13, 17, 19, 23, 29),  
+  z = sample(c(rep("A",3),rep("B",5),rep("C",2)), replace = FALSE)
+)
+datos
+```
+
+Creamos un diagrama de dispersión con las dos variables del `dataframe` *datos*
+
+```{r}
+p <- ggplot(datos, aes(x = x, y = y)) +
+  geom_point(size = 3, color = "blue") +
+  ggtitle("Modificando las marcas de graduación de los ejes, fondo y grilla") +
+  xlab("Eje X") +
+  ylab("Eje Y")
+p
+```
+
+
+# Modificando las marcas de graduación de los ejes
+
+En el eje X en intervalos de tamño 2 y en el eje Y intervalos de tamaño 5.
+
+```{r}
+p <- p + 
+  scale_x_continuous(breaks = seq(0, 10, by = 2)) +  
+  scale_y_continuous(breaks = seq(0, 30, by = 5))    
+p
+```
+
+# Modificando el fondo y la cuadrícula
+
+
+```{r}
+p <- p +
+  theme(
+    # Modificando el fondo
+    panel.background = element_rect(fill = "chartreuse", color = "black"),  # fondo
+    plot.background = element_rect(fill = "salmon"),   # borde del fondo
+    
+    # Modificando la cuadrícula
+    panel.grid.major = element_line(color = "blue", linewidth = 0.75),  # Azul para las lines grandes
+    panel.grid.minor = element_line(color = "steelblue", linewidth = 0.25),# azul claro para las pequeñas
+    
+    # Modificando los ejes, el tamaño de letra y el ángulo
+    axis.text.x = element_text(size = 12, angle = 45, hjust = 1),  # tamaño de texto y ángulo del eje X
+    axis.text.y = element_text(size = 12),                          # tamaño del texto en el eje Y
+    # Modificando el color y tamaño del título
+    plot.title = element_text(color = "darkgreen", size = 16, face = "bold", hjust=0.5),
+    # modificando el color del texto de los ejes
+    axis.text = element_text(colour = "red")
+) 
+p
+```
+
+# Hacer zoom
+
+Restringimos el área del gráfico, en el eje X de de 3 a 8 y en el eje Y de 0 a 20.
+
+```{r}
+p <- p + coord_cartesian(xlim = c(3, 8), ylim = c(0, 20))
+p
+```
+
+# Agregar líneas horizontales y/o vertivales
+
+```{r}
+p <- p + geom_hline(yintercept = mean(datos$y),color="black")
+p 
+```
+
+```{r}
+p + geom_vline(xintercept = mean(datos$x),color="black")
+p
+```
+
+
+# Modificando la leyenda
+
+```{r}
+p1 <- ggplot(datos) +
+  geom_point(aes(x = x, y = y, color = z),size = 3) +
+  ggtitle("Modificando la leyenda") +
+  xlab("Eje X") +
+  ylab("Eje Y")
+p1 
+``` 
+
+```{r}
+p1 <- p1 + 
+  scale_color_manual(
+    values = c("A" = "blue", "B" = "red", "C"="yellow"),  
+    name = "Tipo de z",    
+    labels = c("Grupo A", "Grupo B", "Grupo C")
+  ) +
+  theme(
+    legend.position = "bottom",   
+    legend.title = element_text(size = 14, face = "bold"),  
+    legend.text = element_text(size = 12)  
+  )
+p1
+```
+
+
+## Poner la leyenda dentro del gráfico
+```{r}
+p2 <- p1 + 
+  scale_color_manual(
+    values = c("A" = "blue", "B" = "red", "C"="yellow"),  
+    name = "Tipo de z",    
+    labels = c("Grupo A", "Grupo B", "Grupo C")
+  ) +
+  theme(
+    legend.position = c(0.2,0.8),   
+    legend.title = element_text(size = 14, face = "bold"),  
+    legend.text = element_text(size = 12)  
+  )
+p2
+```
+
+# Hacer anotaciones dentro del gráfico
+
+```{r}
+p2 + annotate(geom = "text", x = 6.2, y = 13, label = "Punto rojo", hjust = "left")
+```
+
+## Agregar un rectángulo
+
+```{r}
+p2 + geom_rect(xmin=4.5, xmax=7.4, ymin=9, ymax=18, fill="grey70", alpha=0.1, color="black")
+```

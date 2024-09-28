@@ -1,0 +1,58 @@
+---
+title: ggplot2 avanzado
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    toc-depth: 2
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+---
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+library(carData)
+theme_set(theme_bw())
+head(Salaries)
+```
+
+```{r}
+Salaries %>%
+    ggplot(aes(yrs.since.phd, salary, color=rank)) +
+    geom_point()
+```
+
+```{r}
+Salaries %>%
+    ggplot(aes(yrs.since.phd, salary, color=rank)) +
+    geom_jitter(aes(color=rank, shape=discipline)) +
+    geom_smooth(method = lm) +
+    facet_wrap(~ sex) +
+    labs(title ="Salary vs years since PhD",
+        x="Years since PhD",
+        y="income",
+        color="Position",
+        shape="Research area")
+```
+
+```{r}
+Salaries %>%
+    filter(salary < 150000) %>%
+    ggplot(aes(rank, salary, fill=sex)) +
+    geom_boxplot(alpha=0.5) +
+    scale_x_discrete(breaks=c("AsstProf","AssocProf","Prof"),
+        labels=c("Assistant\nProfessor","Associate\nProfessor","Full\nProfessor")) +
+    scale_y_continuous(breaks=c(50000,100000,150000,200000),
+        labels=c("$50K","$100k","$150K","200K")) +
+    labs(title="Faculty Salary by Rank and Gender",
+    x="",
+    y="",
+    fill="Gender") +
+    theme(legend.position=c(0.11,0.78))
+```
+

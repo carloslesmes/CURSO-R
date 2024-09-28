@@ -1,0 +1,44 @@
+---
+title: "Simple Histogram with cols4all Colors"
+author: "Your Name"
+format: html
+---
+
+```{r}
+# Install the cols4all package (if not already installed)
+# install.packages("cols4all")
+
+# Load the necessary libraries
+library(ggplot2)
+library(cols4all)
+
+# Create a sample dataset
+set.seed(123)  # For reproducibility
+data <- data.frame(
+  values = rnorm(1000, mean = 50, sd = 10)  # Random normal distribution data
+)
+
+# Select a color palette from cols4all (e.g., "vivid")
+palette_colors <- c4a("vivid", 3)  # Choosing the "vivid" palette with 3 colors
+
+# Create a simple histogram with colored bars
+p <- ggplot(data, aes(x = values)) +
+  geom_histogram(
+    aes(fill=..count..),  # Color the bars based on count
+    bins = 30,              # Number of bins
+    color = "black"         # Black border around bars
+  ) +
+  scale_fill_gradientn(colors = palette_colors) +  # Apply the custom color palette
+  ggtitle("Simple Histogram with cols4all Colors") +  # Plot title
+  xlab("Values") +  # X-axis label
+  ylab("Frequency") +  # Y-axis label
+  theme_minimal() +  # Minimal theme for a clean look
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),  # Centered and bold title
+    axis.text.x = element_text(size = 12),  # X-axis text size
+    axis.text.y = element_text(size = 12)   # Y-axis text size
+  )
+
+# Print the plot
+p
+```

@@ -1,0 +1,428 @@
+---
+title: Paquete ggplot2 de R
+subtitle: y sus extensiones
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+bibliography: biblio.bib
+---
+
+# Paquete `ggplot2`
+
+El paquete `ggplot2` es un paquete que hace gráficas a partir de los datos. Primero, instálelo con `install.packages("ggplot2")` y activarlo con `library(ggplot2)`. Los paquetes `ggExtra` y `ggthemes` son paquetes adicionales que ayudan a mejorar sus gráficas, de igual forma se instalan y se activan. Para saber más vea @Rman y @HWggplot.
+
+## Usos de `ggplot2`
+
+Activamos los paquetes y cargamos el archivo de datos `mpg` del mismo. Haga `data(package="ggplot2")` en la consola de R, para ver los archivos de datos que contiene el paquete. Usaremos el archivo de datos `mpg`. El paquete `ggplot2` trabaja **únicamente** a partir de un `dataframe` o un `tibble`.
+
+Activamos los paquetes a usar, algunos son extensiones del paquete `ggplot2`:
+
+```{r}
+library(ggplot2)
+library(ggExtra)
+library(ggthemes)
+str(mpg)
+names(mpg)
+head(mpg)
+```
+
+# Pasos para hacer una gráfica con `ggplot2`
+
+## Primer paso
+
+Escribir `ggplot(data = <dataframe>)` o `ggplot(<dataframe>)`, se puede omitir `data=`.
+```{r}
+ggplot(data=mpg)
+```
+
+Al *correr* esta instrucción solo se obtiene el plano donde se irán agregando *capas* con el signo `+`. **Nunca** deje el signo `+` iniciando línea.
+
+## Segundo paso
+
+Agregamos una *geometría* con la(s) variable(s) que se van a graficar. Se puede omitir `mapping`, `aes` significa *estética*. Escogemos la función `geom_point()` y dentro de `aes()` incluimos las variables a graficar. Esto será una gráfica de puntos o una gráfica de dispersión. Las geometrías más usuales son: `geom_bar()`, `geom_boxplot()`, `geom_line()`,`geom_rect()`,`geom_histogram()`, `geom_smooth()`, `geom_rug()`.... Vea la referencia de `ggplot2` [aquí](https://ggplot2.tidyverse.org/reference)
+```{r}
+ggplot(data=mpg) +
+geom_point(mapping = aes(x=displ, y=hwy))
+```
+
+`geom_point` gráfica los puntos.
+```{r}
+ggplot(data=mpg, aes(x=displ, y=hwy)) +
+geom_point() + geom_rug()
+```
+
+`geom_rug()` grafica los puntos en los ejes coordenados.
+
+Dentro de `aes` agregamos la variable `class` para que sea utilizada para colorear los puntos.
+
+```{r}
+ggplot(mpg) +
+geom_point(aes(x=displ, y=hwy, color=class))
+```
+
+
+agrgamos tamaño alos puntos:
+
+```{r}
+ggplot(mpg) +
+geom_point(aes(x=displ, y=hwy, color=class),size=3)
+```
+
+```{r}
+ggplot(mpg) +
+geom_point(aes(x=displ, y=hwy, color=class, size=displ))
+```
+
+## Tercer paso 
+
+Agregamos estadísticas:
+```{r}
+ggplot(data=mpg, aes(x=displ, y=hwy)) +
+geom_point() + stat_summary(fun="median",color='red',alpha=0.6)
+```
+
+## Cuarto paso
+
+Hacer facetas: se generan múltiples gráficas con subconjuntos del `dataframe`. Hay dos posibles formas de hacerlo: 
+
+1. `facet_wrap()`
+2. `facet_grid()`
+
+```{r}
+ggplot(mpg) +
+geom_point(mapping = aes(x=displ, y=hwy, color=class)) +
+facet_wrap(~ class, scales="fixed") 
+```
+
+```{r}
+ggplot(mpg) +
+geom_point(mapping = aes(x=displ, y=hwy, color=class)) +
+facet_wrap(~ class, scales="free")  
+```
+
+```{r}
+ggplot(mpg) +
+geom_point(mapping = aes(x=displ, y=hwy, color=class)) +
+facet_grid(drv ~ cyl)
+```
+
+## Quinto paso
+
+Poner títulos a los ejes y alas leyendas.
+
+```{r}
+ggplot(mpg) +
+geom_point(aes(x=displ, y=hwy, color=class, size=displ)) +
+labs(
+    x = "Capacidad del motor(litros)", 
+    y = "En autopista millas por galón", 
+    colour = "Número de cilindros",
+    title = "Millaje por tamaño del motor y cilindros",
+    subtitle="USTA",
+    caption = "Fuente: https://fueleconomy.gov")
+```
+
+## Sexto paso `theme`
+
+Escoger un tema. La función `theme()` personaliza títulos, etiquetas, fuentes, fondos, y leyendas.
+
+```{r}
+ggplot(mpg) +
+geom_point(aes(x=displ, y=hwy, color=class, size=displ)) +
+theme_dark()
+```
+
+```{r}
+ggplot(mpg) +
+geom_point(aes(x=displ, y=hwy, color=class, size=displ)) +
+theme_solarized() +
+ggtitle("Rendimiento en autopista vs capacidad del motor") +
+theme(plot.title = element_text(face = "bold", colour = "steelblue"))
+```
+
+
+# Diagrama de barras `barplot`
+
+Para graficar una variable categórica utilice `geom_bar()`.
+
+```{r}
+g <- ggplot(mpg, aes(class))
+g + geom_bar(fill='red')
+```
+
+```{r}
+g <- ggplot(mpg, aes(class,cty))
+g + geom_bar(stat = "summary_bin", fun = mean, color= "black", fill="green") +
+labs( title="Rendimiento promedio por clase",
+    x="clase", y="Rendimiento en ciudad millas/gal") +
+ylim(0,25)
+```
+
+```{r}
+g <- ggplot(mpg, aes(class))
+g + geom_bar( color= "black") +
+geom_bar(aes(fill= drv)) +
+labs( title="Rendimiento promedio por clase",
+    x="clase", y="Rendimiento en ciudad millas/gal") 
+```
+
+
+# Diagrama de caja y bigotes `box and whiskers plot`
+```{r}
+ggplot(mpg, aes(x=as.character(cyl), y=hwy)) +
+geom_boxplot(color='blue')
+```
+
+
+```{r}
+ggplot(mpg, aes(x=as.character(cyl), y=hwy)) +
+geom_boxplot(color='blue', fill='green')
+```
+
+```{r}
+ggplot(mpg,aes(class,hwy)) +
+  geom_boxplot(aes(color=class,fill=after_scale(alpha(color, 0.4))))
+```
+
+# Diagrama de puntos dotplot
+
+Para una variable cualitativa.
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_dotplot()
+```
+
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_dotplot(binwidth = 1.5)
+```
+
+## Usar ancho fijo
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_dotplot(method="histodot", binwidth = 1.5)
+```
+
+## Otros métodos de alineamiento
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_dotplot(binwidth = 1.5, stackdir = "center")
+```
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_dotplot(binwidth = 1.5, stackdir = "centerwhole")
+```
+
+## Esconder el eje y
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) + geom_dotplot(binwidth = 1.5) +
+  scale_y_continuous(NULL, breaks = NULL)
+```
+
+## Sobreponer los puntos verticalmente
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_dotplot(binwidth = 1.5, stackratio = .7)
+```
+
+## Agrandar el diámetro de los puntos
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_dotplot(binwidth = 1.5, dotsize = 1.25)
+```
+
+## Cambiar el color y anchura de los puntos 
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_dotplot(binwidth = 1.5, fill = "white", stroke = 2)
+```
+
+## Ejemplos con apilado alo largo del eje y en vez del eje x
+
+```{r}
+ggplot(mtcars, aes(x = 1, y = mpg)) +
+  geom_dotplot(binaxis = "y", stackdir = "center")
+```
+
+```{r}
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_dotplot(binaxis = "y", stackdir = "center")
+```
+
+```{r}
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_dotplot(binaxis = "y", stackdir = "centerwhole")
+```
+
+
+```{r}
+ggplot(mtcars, aes(x = factor(vs), fill = factor(cyl), y = mpg)) +
+  geom_dotplot(binaxis = "y", stackdir = "center", position = "dodge")
+```
+
+## binpositions="all" asegura que las barras se alinien entre grupos
+
+```{r}
+ggplot(mtcars, aes(x = factor(am), y = mpg)) +
+  geom_dotplot(binaxis = "y", stackdir = "center", binpositions="all")
+```
+
+## Apilando varios grupos con diferente llenado
+
+```{r}
+ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +
+  geom_dotplot(stackgroups = TRUE, binwidth = 1, binpositions = "all")
+```
+
+
+```{r}
+ggplot(mtcars, aes(x = mpg, fill = factor(cyl))) +
+  geom_dotplot(stackgroups = TRUE, binwidth = 1, method = "histodot")
+```
+
+
+```{r}
+ggplot(mtcars, aes(x = 1, y = mpg, fill = factor(cyl))) +
+  geom_dotplot(binaxis = "y", stackgroups = TRUE, binwidth = 1, method = "histodot")
+```
+
+# Histograma `histogram`
+```{r}
+ggplot(mpg, aes(x=hwy)) +
+geom_histogram(color='blue', fill='green') + 
+ theme(axis.text.x = element_text(color = "cyan2",
+                                  size = 12),
+       axis.text.y = element_text(color = "red",
+                                  size = 10,
+                                  hjust = 1)) 
+```
+
+```{r}
+ggplot(mpg, aes(x=cty)) +
+geom_histogram(color='blue', fill='green',binwidth=5) +
+ggtitle("Distribución del rendimiento en la ciudad") +
+geom_freqpoly(binwidth=5) +
+xlab("rendimiento millas/galón") +
+ylab("frecuencia") + theme_solarized()
+```
+
+
+# Extensiones de ggplot2
+
+Después de creado el paquete `ggplot2` muchos usuarios han realizado paquetes *encima* de `ggplot2`, llamados extensiones. Para saber más [vea aquí](https://exts.ggplot2.tidyverse.org/gallery/). La documentación de `ggExtra` está en @ggExt. La extensión `ggExtra` permite hacer histogramas al margen de un diagrama de dispersión:
+
+
+```{r}
+p <- ggplot(mpg) + geom_point(aes(cty,hwy)) 
+ggMarginal(p, type = "histogram",xparams = list(fill = 4),
+           yparams = list(fill = 3)) 
+```
+
+
+# Etiquetas y/o anotaciones en los gráficos
+
+```{r}
+mtcars
+p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars)))
+p + geom_label()
+```
+
+
+# Tema `theme`
+```{r}
+ggplot(data = mtcars, aes(x = mpg, y = cyl))+ 
+  geom_point() + 
+  theme(panel.background = element_rect(fill = "#67c9ff")) 
+```
+
+Para seleccionar un color haga clic [aqui](https://www.google.com/search?q=color+picker&sca_esv=5e23bca3cb06adc9&sca_upv=1&ei=jwzZZoe7EtqYwbkPoYST4QI&ved=0ahUKEwjHvpa_1qqIAxVaTDABHSHCJCwQ4dUDCBA&uact=5&oq=color+picker&gs_lp=Egxnd3Mtd2l6LXNlcnAiDGNvbG9yIHBpY2tlcjIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzINEAAYgAQYsAMYQxiKBTINEAAYgAQYsAMYQxiKBUj8D1AAWABwAXgBkAEAmAEAoAEAqgEAuAEDyAEAmAIBoAILmAMAiAYBkAYKkgcBMaAHAA&sclient=gws-wiz-serp) o escriba *color picker* en su navegador preferido.
+
+```{r}
+ggplot() +
+  stat_function(fun = dnorm, geom = "density",
+                xlim = c(-4, 4),
+                fill = rgb(0, 0, 1, 0.1)) +
+                theme(plot.background = element_rect(fill = "green"))
+```
+
+
+# Presentación de varios gráficos
+```{r}
+# creamos un dataframe
+set.seed(5)
+x <- runif(100)
+df <- data.frame(x = seq_along(x), var = x)
+
+# boxplot
+p1 <- ggplot(df, aes(x = "", y = var)) +
+  geom_boxplot(fill='yellow')
+
+# gráfico de densidad
+p2 <- ggplot() +
+  stat_function(fun = dnorm, geom = "density",
+                xlim = c(-3, 3), fill = "lightskyblue") 
+
+# gráfico de línea
+p3 <- ggplot(df, aes(x = x, y = var)) +
+  geom_line(color = "pink")
+
+# diagrama de dispersión
+p4 <- ggplot(df, aes(x = x, y = var)) +
+  geom_point(color = "green")
+
+# ver las gráficas
+p1
+p2
+p3
+p4
+```
+
+La libreria `patchwork` permite personalizar la presentación de los gráficos 
+```{r}
+library(patchwork)
+p1+p2+p3+p4
+```
+
+```{r}
+(p1 | p2) / p3 
+
+p1 | (p2 / p3) 
+```
+
+
+# Mapas
+
+`ggplot2` también permite graficar mapas.
+```{r}
+library(sf)
+map <- read_sf("https://raw.githubusercontent.com/R-CoderDotCom/data/main/ukraine.geojson")
+ggplot(map) +
+  geom_sf() 
+```
+
+# Referencias
+Siempre se deben citar los paquetes utilizados.
+```{r}
+citation()
+citation("ggplot2")
+citation("ggExtra")
+```
+
+

@@ -1,0 +1,280 @@
+---
+title: Uso del paquete `dplyr`
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    toc-depth: 2
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+---
+
+# Paquete `dplyr`
+
+Activamos los paquetes  una vez instalados con la función `install.packages()`  en la consola. Recomiendo que instalen el  metapaquete `tidyverse`que instala varios paquetes muy útiles en el análisis de datos, entre estos instala `dplyr`.
+```{r}
+library(dplyr)
+# suppressPackageStartupMessages(library(dplyr))
+library(nycflights23)
+```
+
+
+```{r}
+flights <- as_tibble(flights) # para que imprima bonito
+head(flights)
+```
+
+Estudiaremos las funciones básicas más útiles del paquete `dplyr` para la manipulación de datos.
+
+1. La función `filter()` extrae las observaciones (filas) de un `dataframe` o `tibble`.
+2. `select()` selecciona columnas de un `tibble`.
+3. La función `arrange` reordena las filas de un `dataframe`.
+4. `mutate()` crea nuevas funciones a partir de las ya existentes.
+5. `summarize()` colapsa un `tibble` hacía abajo para obtener resúmenes, va generalmente, acompañado de la función `group_by`.
+
+Recuerde que:
+
+1. El primer argumento de las funciones es un `dataframe`.
+2. Los siguientes argumentos describen qué hacer con el `dataframe` usando los nombres de las variables **sin** comillas.
+3. El resultado es un `dataframe`. 
+
+Usaremos el archivo `flights`. Una de los primeros pasos es escribir en la consola `help(flights)` y leer en qué consiste cada una de las variables. Segundo, veamos como es su estructura.
+
+```{r}
+str(flights)
+```
+
+Los nombres de las variables y sus dimensiones:
+
+```{r}
+names(flights)
+dim(flights)
+nrow(flights)
+ncol(flights)
+```
+
+# Operadores Booleanos (lógicos) 
+
+En ocasiones se necesita utilizar combinaciones de los operadores "y", "o", "no". En R `&` es y, `|` es o y `!` es no.
+
+# Funciones clave
+
+## La función `filter()`
+
+La función selecciona las filas con la condición deseada. Selecionemos los viajes de diciembre:
+
+```{r}
+dic <- filter(flights, month == 12)
+head(dic)
+```
+
+Seleccionemos los viajes del 31 de diciembre
+
+```{r}
+dic31 <- filter(flights, month == 12, day == 31)
+head(dic31)
+```
+
+Seleccionemos los viajes de noviembre y diciembre 
+
+```{r}
+nov_dic <- filter(flights, month == 11 | month ==12)
+head(nov_dic)
+tail(nov_dic)
+```
+
+
+la `between()` es útil si fueran varios meses:
+
+```{r}
+sep_dic <- filter(flights, between(month, 9, 12))
+head(sep_dic)
+tail(sep_dic)
+```
+
+¿Qué `dataframe` representa `primeros_ago_nov` en  el siguiente código?
+
+```{r}
+primeros_ago_nov <- filter(flights, between(month, 8, 11) & day == 1)
+head(primeros_ago_nov, 3)
+tail(primeros_ago_nov, 3)
+```
+
+## `arrange()`
+
+Esta función también selecciona filas pero les cambia el orden. Toma el `dataframe` y un conjunto de columnas y las ordena en forma ascendente, empezando por la primera. Si hay varias columnas, cada columna adicional será usada para *romper* los empates. Se puede ordenar en forma descendente usando la función `desc()`.
+
+```{r}
+ord3 <- arrange(flights, year, month, day)
+head(ord3)
+```
+
+```{r}
+demoras_lleg <- arrange(flights, desc(arr_delay))
+head(demoras_lleg,20)
+tail(demoras_lleg,3)
+```
+
+Note que los datos faltantes `NA` los coloca al final.
+
+## `select()`
+
+Esta función selecciona columnas. Generalmente los conjuntos de datos tienen cientos o miles de variables. En este caso el analista selecciona las variables en as que está interesado.
+
+```{r}
+tres <- select(flights, year, month, day)
+head(tres)
+```
+
+Si son varias las variables a seleccionar use `:`
+```{r}
+tres1 <- select(flights, year:day)
+head(tres1)
+```
+
+Para suprimir algunas variables use `-`
+
+```{r}
+sin_ymd <- select(flights, -(year:day))
+head(sin_ymd)
+```
+
+Para poner ciertas variables al comienzo:
+
+```{r}
+time <- select(flights, time_hour, air_time, everything())
+time[1:5,1:5]
+```
+
+Hay varias funciones de ayuda *helpers* que se pueden usar dentro de `select()`:
+
+1. `starts_with("abc")` coincide con los nombres que empiezan con "abc"
+2. `ends_with("xyz")` coincide con los nombres que terminan con "xyz"
+3. `contains("ijk")` coincide con los nombres que contiene "ijk"
+
+Por ejemplo, sacar las variables que terminan con "delay"
+
+```{r}
+con_delay <- select(flights,year:day,ends_with("delay"), distance, air_time)
+head(con_delay)
+```
+
+
+
+## `mutate()`
+
+Para crear nuevas variables
+
+```{r}
+horas_aire <- mutate(flights, horas = air_time / 60)
+horas_aire[1,]
+```
+
+## `summarize()`
+
+Encontrar el número de vuelos que llegaron a cada uno de los destinos en 2023:
+```{r}
+destinos <- group_by(flights,dest)
+vuelos_destino <- summarize(destinos,n=n())
+head(vuelos_destino)
+```
+
+Tiempo promedio de retraso en la salida por aerolinea, en minutos:
+
+```{r}
+por_aerolinea <- group_by(flights, carrier)
+media_retraso <- summarize(por_aerolinea, retraso = mean(dep_delay, na.rm=TRUE))
+media_retraso
+```
+
+```{r}
+barplot(retraso ~ carrier, data=media_retraso, col="salmon")
+```
+
+# Ejercicios
+
+1. Encuentre todos los vuelos que:
+   1. se retarden más de 2 horas en la llegada. (arrival delay)
+   2. volaron a Houston, ya sea a IAH o HOU.
+   3. fueron operados por United, American o Delta.
+   4. salieron en Julio,  Agosto y Septiembre.
+   5. llegaron más de dos horas tarde y salieron a tiempo.
+   6. salieron demorados por al menos una hora.
+   7. salieron entre medianoche y las 6am.
+2. Ordene el `dataframe` flights para encontrar los vuelos que salen más demorados.
+3. ¿Qué vuelos son los más largos?
+4. ¿Los más cortos?
+
+# Solución
+
+```{r}
+uno <-  filter(flights, arr_delay >= 120)
+uno <- select(uno, month,day,carrier,arr_delay)
+head(uno)
+```
+
+```{r}
+dos <- filter(flights, dest=="IAH" | dest=="HOU")
+head(dos)
+nrow(dos)
+```
+
+```{r}
+tres <- filter(flights, carrier %in% c("AA", "DL", "UA"))
+head(tres)
+nrow(tres)
+```
+
+```{r}
+cuatro <- filter(flights, month >= 7, month <= 9)
+head(cuatro)
+```
+
+```{r}
+cinco <- filter(flights, arr_delay > 120, dep_delay <= 0)
+head(cinco)
+```
+
+```{r}
+seis <- filter(flights, dep_delay >= 60)
+head(seis)
+```
+
+```{r}
+summary(flights$dep_time)
+siete <- filter(flights, dep_time <= 600 | dep_time == 2400)
+head(siete)
+nrow(siete)
+```
+
+## Ordene el `dataframe` flights para encontrar los vuelos que salen más demorados.
+
+
+```{r}
+head(arrange(flights, desc(dep_delay)))
+```
+
+## Vuelos más cortos y más largos en tiempo
+
+```{r}
+head(arrange(flights, air_time))
+head(arrange(flights, desc(air_time)))
+```
+
+## Vuelos más rápidos (en velocidad)
+```{r}
+flights <- mutate(flights, speed=distance/air_time, na.rm=TRUE)
+head(arrange(flights,desc(speed)))
+```
+
+## Vuelos más cortos y más largos en distancia
+
+```{r}
+head(arrange(flights, desc(distance)))
+head(arrange(flights, distance))
+```

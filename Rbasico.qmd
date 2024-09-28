@@ -1,0 +1,305 @@
+---
+title: R básico
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+---
+
+# R y RStudio
+
+R es un lenguaje de programación gratuito y de código abierto dedicado a los procedimientos estadísticos. RStudio es un `IDE` *Integrated Development Environment* dedicado a R.
+
+![R](logo.jpeg)
+![RS](logoRS.jpeg)
+
+# R básico
+
+## R como calculadora
+
+En R se pueden hacer cálculos como en una calculadora
+
+```{r}
+1+3
+4-5
+2*3
+4/5
+2^3
+1/(1/(1+2)^2)
+```
+
+## Comparaciones lógicas
+
+Al hacer comparaciones lógicas se obtiene `TRUE` o `FALSE`.
+
+```{r}
+1 == 2  # ¿es igual?
+3 != 4  # ¿es diferente?
+pi > 4  #  ¿es mayor?
+```
+
+## Tipos de algunos objetos
+
+```{r}
+typeof(1L)  #entero
+typeof(1)  #entero
+typeof(3.5)  #real
+typeof("abc")  # cadena
+typeof(TRUE)   #lógico o Booleano
+```
+
+
+## Variables
+
+En R todo es un objeto y se les puede asignar un nombre. Un número es un objeto, una suma es un objeto, un vector es un objeto, una imagen es un objeto, un histograma es un objeto, ... y se les puede asignar un nombre con `<-`, `->` o `=`. Ejemplos:
+
+```{r}
+a <- 5
+numero1 = 8
+histo <- hist(rnorm(100),main=" Números aleatorios normales",col="salmon")
+7.3 -> b
+```
+
+Los nombres pueden ser cortos o largos, no deben comenzar por números o caracteres especiales y no deben contener espacios.
+
+## Datos
+
+Los datos pueden venir presentados en **vectores**, **listas**,**matrices**, **dataframes**, etc. 
+
+## Vectores
+
+Un vector es una colección de uno o más datos del mismo tipo. La función `c()` se utiliza para encadenar elementos y vectores. Ejemplos de vectores:
+
+
+```{r}
+v1 <- c(1,2,3,4,5)
+v2 <- c(TRUE, TRUE,FALSE)
+edad <- c(20,21,20,18,20.5)
+v3 <- 1:5
+v3
+v4 <- c(c(1,2,3),c(4,5,6))
+v4
+v5 <- seq(2,34,5)
+v5
+v6 <- c(4,5,6)
+v1 + v6
+v7 <- c(1,TRUE,"a")
+v8 <- c(NA,1,2,NA,8)
+complete.cases(v8)
+which.max(edad)
+edad[which.max(edad)]
+```
+ 
+## Acceder a los elementos de un vector
+
+```{r}
+edad[3]
+edad[3:5]
+``` 
+
+## ¿Es vector?
+```{r}
+is.vector(v1)
+```
+
+Todos los objetos tienen un tipo:
+
+```{r}
+typeof(v1)
+typeof(v2)
+typeof(edad)
+class(v1)
+class(edad)
+typeof(v7)
+typeof(v8)
+```
+
+## Datos faltantes
+
+```{r}
+mean(v8)
+mean(v8,na.rm=TRUE)
+```
+
+## Algunos vectores especiales
+```{r}
+
+3:45
+99:1
+letters
+LETTERS
+colors()
+runif(200,6,9)
+rep(2,5)
+rep("a",4)
+```
+
+Los vectores del código anterior son muy extensos. Se añadió la opción `#| results: hide` para que no los imprima. Si quiere ver el comienzo y/o el final haga:
+
+```{r}
+head(runif(200,6,9))
+tail(LETTERS)
+LETTERS[3:9]
+tail(colors())
+```
+
+## Funciones para vectores
+
+```{r}
+vector <- c(2,3,4,5,4,3,2,3,4,5,6,7,8,9,1)
+vector > 5
+vector[vector>5]
+length(vector)
+sort(vector)
+unique(vector)
+table(vector)
+rev(vector)
+sum(vector)
+prod(vector)
+w1 <- c(1,2,3)
+w2 <- c(3,4,5)
+rbind(w1,w2)
+w1 + w2
+w1 * w2
+```
+
+## Matrices
+
+Una matriz es una ordenación rectangular de números reales. En R se pueden crear matrices, así:
+
+```{r}
+m1 <- matrix(1:9, nrow=3)
+m2 <- matrix(1:9, byrow=TRUE, nrow=3)
+m3 <- matrix(c(11,-2,3.1,42),nrow=2)
+m1;m2;m3
+```
+
+### Aceder a los elementos de una matriz
+
+```{r}
+m2[2,]
+m2[,3]
+m2[2,3]
+```
+
+### Nombrar las columnas de una matriz
+
+```{r}
+colnames(m2) <- c("v1", "v2", "v3")
+m2
+```
+
+
+## Listas
+
+Una lista es un vector, muy especial, que contiene objetos de cualquier tipo y/o tamaño:
+
+```{r}
+l1 <- list("matriz1"=m1, "matriz2"=m2, "vector1"=v1, "vector2"=v2,"numero"=1)
+l1
+l1$matriz2
+```
+
+## Dataframes
+
+Un `dataframe` es una estructura de datos bidimensional que contiene en sus columnas las variables y en las filas los casos. Se diferencia de una matriz en que las columnas de un `dataframe` deben tener el mismo tipo de datos. Un `dataframe` puede contener datos faltantes: `NA`.
+
+### Crear un dataframe
+
+```{r}
+df1 <- data.frame(edad= c(20,23,26,30), peso=c(45,56,78,55),genero=c("m","f","f","m"))
+typeof(df1)
+df1
+filas <- df1$edad > 25
+df1[filas,]
+```
+
+### De matriz a dataframe
+
+```{r}
+mat <- matrix(1:50,nrow=10)
+Mdf <- as.data.frame(mat)
+Mdf
+```
+### Obtener las características de un dataframe
+
+```{r}
+dim(df1)  # dimensión
+length(df1)   # total de datos
+names(df1)   # variables
+head(df1)   # primeras filas 
+tail(df1)   # últimas filas
+nrow(df1)   # número de filas 
+ncol(df1)   # número de columnas
+summary(df1)  # resumen de estadísticas
+```
+
+### Extraer elementos de un dataframe
+
+```{r}
+df1$edad
+df1[1]
+df1["edad"]
+df1[,"edad"]
+df1[-2,]
+df1[[2]]
+df1[2,3]
+df1[,-2]
+```
+
+## Agrgar una columna a un dataframe
+
+```{r}
+estatura <- c(158,160,172,180)
+df2 <- cbind(df1,estatura)
+df2
+```
+
+
+## Factores
+
+La función `factor()` de R categoriza una variable cualitativa.
+
+```{r}
+# Creando un vector de datos cualitativos
+x <- c("female", "male", "male", "female")
+print(x)
+
+# Convirtiendo el vector en factor 
+# nombre genero 
+genero <- factor(x)
+print(genero)
+is.factor(genero)
+```
+
+::: {.callout-important}
+Los dataframes convierten las variables cualitativas en factores.
+:::
+
+
+
+## Conjuntos de datos en el R básico
+
+El R básico tiene varios conjuntos de datos, en su mayoría dataframes, simplemente, escriba `data()` en la consola de R en RStudio para ver el listado de conjuntos de datos, o vea el siguiente código:
+```{r}
+data_package = data(package="datasets")
+datasets <- as.data.frame(data_package[[3]])$Item
+datasets
+```
+
+```{r}
+iris <- iris
+str(iris)
+```
+
+```{r}
+head(iris)
+```
+

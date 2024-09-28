@@ -1,0 +1,64 @@
+---
+title: El YAML
+author: Carlos Lesmes
+date: 08/22/2024
+format:
+  html:
+    theme: journal
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+lang : es
+---
+
+# El YAML
+
+El YAML de este documento es el encabezado del documento `.qmd` antes de *renderizarlo*[^1]. Estas son las opciones del documento, es decir los metadatos[^2] del escrito. Al escribirlo se debe respetar la indentación, se encuentra separado al inicio del documento por tres guiones al comienzo y tres guiones al final.
+
+    ---
+    title: El YAML
+    author: Carlos Lesmes
+    date: 08/22/2024
+    format:
+       html:
+           theme: journal
+           toc: true
+           toc_float: true
+           number-sections: true
+           code-fold: show
+    lang : es
+    ---
+
+Vea más información del YAML [aquí](https://rpubs.com/gustavomtzv/874870)
+
+
+
+## `title`, `author`  y `date`
+
+Son respectivamente el título, el autor y la fecha del documento. Dejar un espacio después de los dos puntos y escribir los datos deseados. Las palabras clave `title`, `author`  y `date` no se deben cambiar.
+
+## `format`
+
+Aquí se especifíca el formato de salida del documento, en este caso `html`. Dentro de html están las siguientes opciones:
+
+1. theme: journal
+2. toc: true
+3. toc_float: true
+4. number-sections: true
+5. code-fold: show
+
+La opción `theme` permite escoger un color específico para los títulos, enlaces, etc. Puede cambiar el tema `journal` por otros 24 que encontrará en [Temas](https://quarto.org/docs/output-formats/html-themes.html).
+
+`toc` y `toc-float` muestran respectivamente la tabla de contenido y la mantiene siempre visible con la opción `true`. Si no se desea que lo hagan use `false`.
+
+`number-sections` enumera los títulos y subtítulos y `code-fold` permite ver y ocultar el código R en el documento haciendo clic en el triángulo-Código a continuación:
+
+```{r}
+matrix(1:16,nrow = 4)
+```
+Por último, para que las opciones salgan en español use `lang: es`.  Los tags para ingles, francés y alemán son respectivamente `en`, `fr` y `de`.
+
+
+[^1]: render: the process of converting code into viewable, interactive web content
+[^2]: datos de los datos

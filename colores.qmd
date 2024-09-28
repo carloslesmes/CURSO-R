@@ -1,0 +1,117 @@
+---
+title: Manejo de colores en R
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+---
+
+Hay varios paquetes que manejan color en R.
+
+# Paquetes a usar
+```{r}
+library(ggplot2)
+suppressMessages(library(viridis))
+library(colorspace)
+library(cols4all)
+library(palmerpenguins)
+head(penguins)
+str(penguins)
+```
+
+Para conocer más del paquete `palmerpenguins` vea [aquí](https://allisonhorst.github.io/palmerpenguins/)
+
+# Paquete viridis
+
+Para más información del paquete [viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
+
+```{r}
+p <- ggplot(penguins,aes(bill_length_mm,bill_depth_mm,color=body_mass_g))+ geom_point(size=4) 
+p
+p + scale_color_viridis_c(begin=0.1,end=0.9)  # puede escoger de la a a h
+```
+
+```{r}
+hist(rnorm(100), col = viridis(6),breaks = -3:3, freq=FALSE, main="Histograma con viridis",ylab="Probabilidad",labels=TRUE,ylim=c(0,.45))
+```
+
+
+# Paquete colorspace
+
+Creador de [paletas](http://hclwizard.org:3000/hclwizard/) de gamas de colores del paquete `colorspace`. Manejo del paquete
+[colorspace](https://colorspace.r-forge.r-project.org/articles/colorspace.html)
+
+```{r}
+head(hcl_palettes(),15)
+```
+
+Usaremos, en lo que sigue, el `dataset` **iris**
+```{r}
+head(iris)
+```
+
+```{r}
+ggplot(iris, aes(x = Species, y = Sepal.Width, color = Sepal.Length)) + geom_jitter(width = 0.2) +
+  scale_color_continuous_sequential(palette = "Heat")
+```
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, fill = Species)) + geom_density(alpha = 0.6) +
+  scale_fill_discrete_qualitative()
+```
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) + geom_point() +
+  scale_color_discrete_qualitative(palette = "Set 2")
+```
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, fill = Species)) + geom_density(alpha = 0.6) +
+  scale_fill_discrete_qualitative(palette = "Harmonic")
+```
+
+```{r}
+ggplot(iris, aes(x = Species, y = Sepal.Width, color = Sepal.Length)) + geom_jitter(width = 0.2) +
+  scale_color_continuous_sequential(palette = "Viridis")
+```
+
+# Paquete `cols4all`
+
+Para saber más del paquete `cols4all` vea [aquí](https://github.com/mtennekes/cols4all). Escriba en la consola de Rstudio `c4a_gui()`.
+
+```{r}
+c4a_palettes(type = "div", series = "hcl")
+```
+
+
+```{r}
+c4a_plot("hcl.purple_green", 11, include.na = TRUE)
+```
+
+```{r}
+library(ggplot2)
+data("diamonds")
+diam_exp = diamonds[diamonds$price >= 15000, ]
+
+# discrete categorical scale
+ggplot(diam_exp, aes(x = carat, y = price, color = color)) +
+    geom_point(size = 2) +
+    scale_color_discrete_c4a_cat("carto.safe") +
+    theme_light()
+```
+
+
+```{r}
+dfc = as.data.frame(x = rnorm(100))
+set.seed(1234)
+ggplot(dfc, aes(rnorm(100))) +
+geom_histogram(binwidth=1,aes(fill=after_stat(count)),show.legend=FALSE) 
+```
+

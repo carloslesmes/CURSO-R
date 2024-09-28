@@ -1,0 +1,53 @@
+---
+title: ggplot2 themes
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    df-print: paged
+lang : es
+---
+
+```{r}
+library(ggplot2)
+base <- ggplot(mpg, aes(cty, hwy, color = factor(cyl))) +
+  geom_jitter() + 
+  geom_abline(colour = "blue", linewidth = 2)
+base
+```
+
+```{r}
+labelled <- base +
+  labs(
+    x = "City mileage/gallon",
+    y = "Highway mileage/gallon",
+    colour = "Cylinders",
+    title = "Highway and city mileage are highly correlated"
+  ) +
+  scale_colour_brewer(type = "seq", palette = "Spectral")
+labelled
+```
+
+```{r}
+styled <- labelled +
+  theme_bw() + 
+  theme(
+    plot.title = element_text(face = "bold", size = 12),
+    legend.background = element_rect(
+      fill = "white", 
+      linewidth = 4, 
+      colour = "white"
+    ),
+    legend.justification = c(0, 1),
+    legend.position = c(0.1, .9),
+    axis.ticks = element_line(colour = "grey70", linewidth = 0.2),
+    panel.grid.major = element_line(colour = "grey70", linewidth = 0.2),
+    panel.grid.minor = element_blank()
+  )
+styled
+```

@@ -1,0 +1,56 @@
+---
+title: Leer tablas HTML con r
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+---
+
+Vamos a extraer información de una página web. Usaremos la siguiente [página](https://es.wikipedia.org/wiki/Anexo:Municipios_de_Colombia_por_población). Esta página contiene
+datos de población de colombia. Vamos extraer e importar las tablas a R en forma de tibble.
+
+El paquete `rvest` permite leer una página web y extraer la información. **web scraping**
+```{r}
+library(rvest)
+suppressPackageStartupMessages(library(dplyr))
+```
+
+
+```{r}
+direc <- "https://es.wikipedia.org/wiki/Anexo:Municipios_de_Colombia_por_población"
+tabs <- read_html(direc)
+nodos <- html_nodes(tabs, "table")
+nodos
+t1 <- html_table(nodos, header=TRUE, fill=TRUE)[[1]]
+t2 <- html_table(nodos, header=TRUE, fill=TRUE)[[2]]
+t3 <- html_table(nodos, header=TRUE, fill=TRUE)[[3]]
+t4 <- html_table(nodos, header=TRUE, fill=TRUE)[[4]]
+t5 <- html_table(nodos, header=TRUE, fill=TRUE)[[5]]
+t6 <- html_table(nodos, header=TRUE, fill=TRUE)[[6]]
+final <- as_tibble(rbind(t1,t2,t3,t4,t5,t6))
+head(final)
+tail(final)
+```
+
+```{r}
+dim(final)
+names(final) <- c("Num","Municipio","Departamento","Cabecera","Resto","PTotal")
+str(final)
+resc <- function(x) (gsub(" ","",x))
+head(mutate(final, Cabecera = resc(Cabecera), Resto=resc(Resto),PTotal=resc(PTotal)))
+str(final)
+```
+
+```{r}
+depto <- group_by(final, Departamento)
+names(final)
+# summarize(depto, totdep = sum(PTotal))
+unique(final$Departamento)
+```

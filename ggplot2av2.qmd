@@ -1,0 +1,33 @@
+---
+title: Uso del paquete `ggplot2` avanzado
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    toc-depth: 2
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+---
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(car))
+library(forcats)
+theme_set(theme_bw() + 
+    theme(title= element_text(color="steelblue",face="bold")))
+Salaries %>%
+    mutate(discipline = factor(discipline, levels=c("A","B"),labels=c("Agriculture","Biology"))) %>%
+    ggplot(aes(yrs.since.phd, salary)) +
+    geom_point(aes(color=rank),alpha=0.5) +
+    geom_smooth(method=loess, formula = y~x) +
+    facet_grid(sex~discipline) +
+    labs(title ="Salary vs years since PhD",
+        x="Years since PhD",
+        y="Current salary",
+        color="Position")
+```

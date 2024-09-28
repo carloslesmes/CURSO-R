@@ -1,0 +1,71 @@
+---
+title: Paquetes de R
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+---
+
+# Paquetes de R
+
+R básico no tiene una función para importar archivos almacenados en archivos con extensión `.xsl` y `.xslx`, creados con Excel. Es por eso que es necesario instalar paquetes que nos permitan realizar esa tarea. Un paquete es un conjunto de funciones que, no necesariamente, están en el R básico. A la fecha hay 21145 paquetes disponibles.
+
+## Paquete para leer/escribir archivos de Excel
+
+Podemos instalar paquetes usando la función `install.packages()`, dando como argumento el nombre del paquete que deseamos instalar, entre comillas. Para instalar el paquete **readxl**, hacemos:
+
+```{r}
+# install.packages("readxl") ;aparte
+library(readxl)
+FruitVeg <- read_excel("FruitVeg.xlsx")
+FruitVeg
+```
+
+```{r}
+str(FruitVeg)  # tibble o dataframe es lo mismo.....
+```
+
+
+## Guardar datos en R  
+```{r}
+save(FruitVeg, file="fruta.rda") # para guardar el archivo en R 
+```
+
+## Cargar datos de R  
+```{r}
+load("fruta.rda")
+FruitVeg
+```
+
+
+# Tarea
+
+1.  Descargar el paquete `nycflights23`
+2.  Active el paquete `nycflights23`
+3.  ¿Qué hay en el paquete?
+4.  Escriba `df23 <- flights` en la consola y ejecute
+5.  ¿Qué estructura tiene `df23` ?
+6.  ¿Cuántas variables (columnas) tiene?
+7.  ¿Cuántos casos (filas)?
+8.  ¿Cuántas aerolíneas hay?
+9.  ¿Cuántos aviones hay?
+10. El vuelo más corto
+11. El vuelo más largo
+12. ¿En qué mes hay más vuelos?
+  
+# Solución
+
+```{r}
+library(nycflights23)
+```
+
+
+
+

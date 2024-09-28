@@ -1,0 +1,112 @@
+---
+title: "Quiz on Vectors, Matrices, and Dataframes in R"
+author: "Carlos Lesmes"
+format: pdf
+---
+
+**Your name**: ___________________
+
+# Quiz: Vectors, Matrices, and Dataframes in R
+
+### Instructions
+Answer all questions. Each question is worth 1 point.
+
+## Multiple Choice Questions (MCQs)
+
+1. **Which of the following will create a numeric vector with values 1, 2, 3?**
+    - a) `c("1", "2", "3")`
+    - b) `c(1, 2, 3)`
+    - c) `c(1L, 2L, 3L)`
+    - d) `c(TRUE, FALSE, TRUE)`
+
+2. **What function is used to check the type of a vector?**
+    - a) `is.vector()`
+    - b) `typeof()`
+    - c) `mode()`
+    - d) `class()`
+
+3. **What is the output of `length(1:10)`?**
+    - a) 9
+    - b) 10
+    - c) 11
+    - d) 1
+
+4. **How do you create a matrix with 2 rows and 3 columns filled by rows with numbers 1 to 6?**
+    - a) `matrix(1:6, nrow = 2, byrow = TRUE)`
+    - b) `matrix(1:6, ncol = 2)`
+    - c) `matrix(1:6, nrow = 2)`
+    - d) `matrix(1:6, byrow = FALSE)`
+
+5. **What will be the result of `matrix(1:6, nrow = 2, byrow = TRUE)[1,]`?**
+    - a) `1 3 5`
+    - b) `1 2`
+    - c) `2 4 6`
+    - d) `1 2 3`
+
+6. **How can you name the columns of a matrix `m` with `c("A", "B", "C")`?**
+    - a) `colnames(m) <- c("A", "B", "C")`
+    - b) `names(m) <- c("A", "B", "C")`
+    - c) `dimnames(m) <- c("A", "B", "C")`
+    - d) `labels(m) <- c("A", "B", "C")`
+
+7. **Which of the following will create a dataframe `df` with two columns `a` and `b`?**
+    - a) `df <- data.frame(c(1, 2, 3), c(4, 5, 6))`
+    - b) `df <- dataframe(a = c(1, 2, 3), b = c(4, 5, 6))`
+    - c) `df <- data.frame(a = c(1, 2, 3), b = c(4, 5, 6))`
+    - d) `df <- c(a = c(1, 2, 3), b = c(4, 5, 6))`
+
+8. **How do you select the `a` column from a dataframe `df`?**
+    - a) `df$a`
+    - b) `df["a"]`
+    - c) `df[, "a"]`
+    - d) All of the above
+
+9. **What will be the result of `sum(c(1, 2, 3) * c(4, 5, 6))`?**
+    - a) 12
+    - b) 21
+    - c) 32
+    - d) 44
+
+10. **How do you remove the second column from a dataframe `df`?**
+    - a) `df <- df[-2, ]`
+    - b) `df <- df[, -2]`
+    - c) `df <- df[,-c(2)]`
+    - d) `df <- remove(df, 2)`
+
+## True or False Questions
+
+11. **A matrix in R can only contain elements of the same data type.**
+    - True
+    - False
+
+12. **You can store both numeric and character data in the same vector.**
+    - True
+    - False
+
+13. **The `nrow` function returns the number of rows in a dataframe.**
+    - True
+    - False
+
+14. **Vectors in R can have elements of different lengths.**
+    - True
+    - False
+
+15. **`data.frame()` automatically converts strings into factors by default.**
+    - True
+    - False
+
+## Short Answer Questions
+
+16. **Write the R code to create a vector with the sequence of numbers from 10 to 1.**
+
+17. **Write the R code to create a 2x2 matrix with the values 1, 2, 3, and 4.**
+
+18. **How do you calculate the mean of all elements in a numeric vector `v`?**
+
+19. **Create a dataframe `df` with three columns: `height` (numeric), `weight` (numeric), and `gender` (factor) with at least 3 rows.**
+
+20. **How do you subset a dataframe `df` to only include rows where `age > 30`?**
+
+---
+
+*End of Quiz*

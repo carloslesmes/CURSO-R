@@ -1,0 +1,110 @@
+---
+title: Uso de Markdown
+author: Carlos Lesmes
+date: 8/25/2024
+format:
+  html:
+    theme: journal
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+lang : es
+---
+
+# Documentos con Quarto
+
+Quarto permite tejer texto y código R en un mismo documento.Para más información vea <https://quarto.org>.
+
+# Insertar código R y ejecutarlo
+
+Al hacer clic en el botón **Render** se generará un documento que incuirá texto junto con el código R ejecutado.
+
+![render](render.png)
+
+Se puede incluir código R de la siguiente forma:
+
+```{r}
+3 + 2
+```
+
+Se pueden agregar opciones
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+La opción `echo: false` no mostrará el código R, no imprimirá el código, solo la salida.
+
+# Gráficas y referencias cruzadas {#sec-graf}
+
+```{r}
+#| label: fig-hist1
+#| fig-cap: "Un histograma"
+hist(runif(100), main="Números aleatorios uniformes",ylab="Frecuencia", xlab="Aleatorios uniformes", col='yellow')
+```
+
+La @fig-hist1 en la sección @sec-graf muestra un histograma.
+
+# Markdown
+
+Referencia rápida de Markdown.
+
+## Citas
+
+> Pienso luego existo. Descartes
+
+## Lista ordenada
+
+1.  Primero
+2.  Segundo
+3.  Tercero
+
+## Lista sin orden
+
+-   Super
+-   Lista
+-   Sin orden
+
+## Código
+
+Escriba en R `mean()` para calcular la media.
+
+## Subíndice
+
+H~2~O
+
+## Superíndice
+
+x^2^
+
+## Tablas
+
+| Item     | En bodega | Precio |
+|:---------|:---------:|-------:|
+| Sombrero |    Si     |  23.99 |
+| Gorra    |    Si     |  23.99 |
+| Ruana    |    No     |  19.99 |
+| Bufanda  |    No     |  42.99 |
+
+## Resaltado
+
+<mark> 4+5 </mark>
+
+## Pie de página
+
+Una frase con pie de página. [^1]
+
+[^1]: Pie de página.
+
+## Línea horizontal
+
+-------
+
+# LLamadas
+
+::: {.callout-note}
+Hay 5 typos de llamadas (callouts), incluyendo:
+`note`, `tip`, `warning`, `caution`, and `important`.
+:::

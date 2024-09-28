@@ -1,0 +1,61 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Uso de Markdown\n",
+        "author: Carlos Lesmes\n",
+        "date: Agosto 2024\n",
+        "format:\n",
+        "  html:\n",
+        "    theme: journal\n",
+        "    toc: true\n",
+        "    toc_float: true\n",
+        "    number-sections: true\n",
+        "    code-fold: show\n",
+        "lang : es\n",
+        "---\n",
+        "\n",
+        "\n",
+        "# El YAML\n",
+        "\n",
+        "\n",
+        "\n",
+        "    ```{yaml}\n",
+        "    title: Uso de Markdown\n",
+        "    author: Carlos Lesmes\n",
+        "    date: Agosto 2024\n",
+        "    format:\n",
+        "    html:\n",
+        "        theme: journal\n",
+        "        toc: true\n",
+        "        toc_float: true\n",
+        "        number-sections: true\n",
+        "        code-fold: show\n",
+        "    lang : es\n",
+        "    ```\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "[Temas](https://quarto.org/docs/output-formats/html-themes.html)"
+      ],
+      "id": "389c4d93"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/carloslesmes/Library/Python/3.12/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
