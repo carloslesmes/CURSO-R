@@ -1,1 +1,1 @@
-Curso de R y Python 
+Curso de R para Administradores
