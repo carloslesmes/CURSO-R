@@ -1,25 +1,38 @@
 ---
 title: "Presentación"
-author: "Carlos lesmes"
-format: beamer
-editor: visual
+author: 
+  - Carlos Lesmes
+  - Charlie Les
+  - Carlitos Litos
+institute: USTA
+format: 
+  beamer: 
+    aspectratio: 32
+    navigation: horizontal
+    theme: AnnArbor
+    colortheme: lily
+lang: es
+thanks: A mis alumnos
 ---
 
 ## Quarto
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+*Quarto* le permite hacer presentaciones mezcladas de texto y código R en un mismo documento. Para saber más vea <https://quarto.org/docs/presentations/>. Para escoger tema y color de tema vea [temas](https://tug.ctan.org/macros/latex/contrib/beamer/doc/beameruserguide.pdf)
 
-## Bullets
+## Listas
 
-When you click the **Render** button a document will be generated that includes:
+Cuando haga clic en **Render** se genera un documento que incluirá:
 
--   Content authored with markdown
--   Output from executable code
+- Contenido hecho con markdown
+- Salida de código ejecutable
 
-## Code
+## Código
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+Para entrar código R:
 
 ```{r}
+#| echo: TRUE
 1 + 1
 ```
+
+Cada diapositiva empienza en cada ##
