@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-Curso de R para Administradores
-=======
 # Curso de R para Administradores
 
 1. Nociones básicas de R
