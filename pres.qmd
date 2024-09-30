@@ -19,7 +19,7 @@ thanks: A mis alumnos
 
 Para hacer presentaciones en **Quarto** debe instalar Latex.
 
-*Quarto* le permite hacer presentaciones mezcladas de texto y código R en un mismo documento. Para saber más vea <https://quarto.org/docs/presentations/>. Para escoger tema y color de tema vea [temas](https://tug.ctan.org/macros/latex/contrib/beamer/doc/beameruserguide.pdf)
+**Quarto** le permite hacer presentaciones mezcladas de texto y código R en un mismo documento. Para saber más vea <https://quarto.org/docs/presentations/>. Para escoger tema y color de tema vea [temas](https://tug.ctan.org/macros/latex/contrib/beamer/doc/beameruserguide.pdf)
 
 ## Listas
 
