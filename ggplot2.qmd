@@ -32,6 +32,7 @@ library(ggthemes)
 str(mpg)
 names(mpg)
 head(mpg)
+knitr::opts_chunk$set(echo=TRUE)
 ```
 
 # Pasos para hacer una gráfica con `ggplot2`
