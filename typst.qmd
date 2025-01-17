@@ -1,0 +1,29 @@
+---
+title: "Bienvenidos Typst!"
+format:
+  typst:
+    toc: true
+    section-numbering: 1.1.a
+    columns: 2
+lang: es
+---
+
+# Introducción
+
+```{=typst} 
+#set par(justify: true)
+
+== Background 
+`typst` crea documentos que se pueden renderizar a `pdf` sin el uso de `LaTeX`. Se gana bastante en velocidad. 
+```
+
+```{=typst}
+#show link: set text(blue)
+== Ecuaciones 
+Escribir ecuaciones matemáticas con `typst`. Para simbolos matemáticos vea #link("https://typst.app/docs/reference/symbols/sym/") y #link("https://typst.app/docs/reference/math/")
+
+$ 7.32 beta +  sum_(i=0)^nabla Q_i / 2 $
+
+$ v := vec(x_1, x_2, x_3) $
+
+```
