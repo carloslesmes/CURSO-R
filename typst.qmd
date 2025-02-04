@@ -1,11 +1,14 @@
 ---
-title: "Bienvenidos Typst!"
+title: "Bienvenidos a Typst!"
 format:
   typst:
     toc: true
     section-numbering: 1.1.a
-    columns: 2
+    keep-typ: true
+number-sections: true
 lang: es
+fontsize: 12pt
+toc-location: right-body
 ---
 
 # Introducción
@@ -27,3 +30,15 @@ $ 7.32 beta +  sum_(i=0)^nabla Q_i / 2 $
 $ v := vec(x_1, x_2, x_3) $
 
 ```
+
+::: {.block fill="luma(230)" inset="8pt" radius="4pt"}
+
+Bloque con fondo gris y esquinas redondeadas.
+
+:::
+
+Aquí texto subrayado en verde [texto surayado en verde (CSS)]{style="background-color:green"}.
+
+:::{style="font-family: helvetica"}
+Párrafo con fuente Helvetica.
+:::
