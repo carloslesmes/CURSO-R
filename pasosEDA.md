@@ -1,6 +1,6 @@
 
 
-# Steps to Analyze a Dataset
+# Steps to make a Descriptive Analysis 
 ## Carlos Lesmes
 ### 19/09/2024
 
