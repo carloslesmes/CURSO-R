@@ -1,0 +1,42 @@
+---
+title: "Series de tiempo"
+author: "Carlos Lesmes"
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: journal
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+lang : es
+---
+
+## Series cronológicas
+
+Una serie de tiempo es un conjunto de datos indexados por el tiempo, es una sucesión de datos tomados en el tiempo en espacios igualmente separados en el tiempo. Cuando se tienen varias series decimos que se tiene una serie de tiempo multivariada.
+
+## Creación de series de tiempo
+
+```{r}
+datos <- c(10, 12, 15, 14, 16, 18, 20, 22, 21, 19, 17, 16)
+mensual <- ts(datos, start = c(2025, 3), frequency = 12)
+mensual
+```
+
+```{r}
+trimestral <- ts(datos, frequency = 4, start = c(2024,2))
+trimestral
+```
+
+## Paquetes de R para graficar series de tiempo
+
+El paquete `dygraphs`.
+
+```{r}
+library(dygraphs)
+library(xts)
+dygraph(matrix_sample) %>% dyRangeSelector()
+```
+
+

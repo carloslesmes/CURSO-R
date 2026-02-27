@@ -10,6 +10,7 @@ format:
     number-sections: true
     code-fold: show
     df-print: kable
+    embed-resources: true
 lang : es
 ---
 
@@ -91,6 +92,7 @@ v5
 v6 <- c(4,5,6)
 v1 + v6
 v7 <- c(1,TRUE,"a")
+v7
 v8 <- c(NA,1,2,NA,8)
 complete.cases(v8)
 which.max(edad)
@@ -105,11 +107,12 @@ edad[3:5]
 ``` 
 
 ## ¿Es vector?
+
 ```{r}
 is.vector(v1)
 ```
 
-Todos los objetos tienen un tipo:
+Todos los objetos tienen un tipo y una clase:
 
 ```{r}
 typeof(v1)
@@ -254,7 +257,7 @@ df1[2,3]
 df1[,-2]
 ```
 
-## Agrgar una columna a un dataframe
+## Agregar una columna a un dataframe
 
 ```{r}
 estatura <- c(158,160,172,180)

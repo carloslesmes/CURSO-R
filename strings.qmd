@@ -1,0 +1,126 @@
+---
+title: Manejo de strings
+subtitle: Cadenas de caracteres
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: cyborg
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    embed-resources: true
+lang : es
+---
+# Manejo de strings
+
+Un *string* es una sucesión de caracteres. Un caracter es cualquier símbolo...
+
+## El string vacío
+
+```{r}
+sv <- ""
+sv
+```
+```{r}
+class(sv)
+length(sv)
+```
+```{r}
+matrix(letters[1:9],3,3)
+a = 17
+b = as.character(a)
+b
+```
+
+## Funciones para el manejo de strings en R
+
+La función `paste()` concadena strings con variables:
+```{r}
+paste("Me", "gusta R")
+paste(1:5)
+paste(1:5, collapse = "")
+```
+```{r}
+paste("El número", pi, "se usa mucho")
+```
+```{r}
+paste("uno","dos","tres",sep = "*")
+```
+```{r}
+paste("X",1:5, sep = ".")
+```
+
+```{r}
+paste("El valor de 'e' es", exp(1))
+```
+La función `cat()`:
+```{r}
+xy = 8
+cat("El valor de xy es ", xy)
+```
+Un vector especial `month.name`
+```{r}
+month.name
+```
+```{r}
+cat(month.name[4:8])
+```
+Convertir a string:
+
+```{r}
+toString(28.07)
+```
+
+La funcio2n `nchar()` cuenta los caracteres de un string.
+```{r}
+nchar(c("murcielago","uno","alfanumérico"))
+```
+A minúsculas
+```{r}
+tolower("AbC")
+```
+A mayúsculas
+```{r}
+toupper("aBcD")
+```
+
+Abreviaciones
+```{r}
+abbreviate(colors()[1:5],3)
+```
+
+Extracción de caracteres
+```{r}
+substr("abcdefgh",3,6)
+```
+Ordenar:
+```{r}
+sort(c("murcielago","uno","alfanumérico"))
+```
+### Ejemplo
+```{r}
+head(USArrests)
+str(USArrests)
+estados = rownames(USArrests)
+```
+
+```{r}
+estados
+```
+```{r}
+nchar(estados)
+```
+```{r}
+hist(nchar(estados),col='steelblue',main='Número de caracteres',xlab='Número de caracteres por estado',ylab='Frecuencia')
+```
+
+Buscar:
+```{r}
+grep(pattern = "k", x = estados)
+grep(pattern = "k", x = estados, value=TRUE)
+```
+
+
+

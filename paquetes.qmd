@@ -10,6 +10,7 @@ format:
     number-sections: true
     code-fold: show
     df-print: kable
+    embed-resources: true
 lang : es
 ---
 
@@ -45,7 +46,7 @@ FruitVeg
 ```
 
 
-# Tarea
+## Tarea
 
 1.  Descargar el paquete `nycflights23`
 2.  Active el paquete `nycflights23`
@@ -60,12 +61,18 @@ FruitVeg
 11. El vuelo más largo
 12. ¿En qué mes hay más vuelos?
   
-# Solución
+## Solución
 
 ```{r}
 library(nycflights23)
 ```
 
+## Funciones de un paquete
+
+```{r}
+suppressPackageStartupMessages(library(dplyr))
+ls("package:dplyr")
+```
 
 
 

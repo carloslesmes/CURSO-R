@@ -1,0 +1,25 @@
+---
+title: "Histograma a distribución de frecuencias"
+author: "Carlos Lesmes"
+format: html
+---
+
+```{r}
+data <- c(12, 15, 15, 18, 21, 22, 22, 22, 25, 28, 30, 30, 35, 40, 40, 42, 45, 50, 50, 55)
+
+h <- hist(data, plot = FALSE)
+
+cortes <- h$breaks
+frecuencia <- h$counts
+frec_acum <- cumsum(frecuencia)
+f_relativa <- frecuencia/length(data)
+fr_acum <- cumsum(f_relativa)
+
+intervalos <- paste(cortes[-length(cortes)], cortes[-1], sep = " - ")
+
+freq_table <- data.frame(Intervalos = intervalos, Frequencia = frecuencia, f_acum=frec_acum, f_relativa=f_relativa, fr_acum=fr_acum)
+
+print(freq_table)
+
+```
+

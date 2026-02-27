@@ -1,0 +1,145 @@
+---
+title: "Funciones en R"
+author: "Carlos Lesmes"
+date: "Febrero 2026"
+format:
+  html:
+    theme: cosmo
+    df-print: kable
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    embed-resources: true
+lang: es
+---
+
+## Introducción
+En R, una función es un objeto que encapsula un conjunto de instrucciones para llevar a cabo una tarea. R tiene una vasta colección de funciones incorporadas y también permite a los usuarios crear sus propias funciones y reusarlas. 
+
+## Functions incorporadas
+R incluye una gran variedad de funciones incorporadas en sus paquetes de base para realizar las operaciones más comunes. Las más populares son: 
+
+1. Mathemáticas: abs(), sqrt(), round(), log(), exp(), sin(), cos().
+2. Estadísticas: mean(), median(), var(), sd(), min(), max(), sum().
+3. Manipulación e inspección de datos: length(), head(), tail(), unique(), subset(), class(), typeof().
+4. Entrada/Salida: read.csv(), write.csv(), print(). 
+Usted puede obtener información sobre ualquier función usando  `?` seguido por el nombre de la función por ejemplo `?mean`. 
+
+Cuando se escribe una función sin `()` R devuelve información sobre la variable.
+
+```{r}
+var
+```
+
+
+## User-Defined Functions
+Los usuarios pueden crear sus propias funciones para que no tenga que repetir código.Ell formato de una función en R es:
+
+```
+nombre <- function(parameters){
+  cuerpo de la función 
+}
+```
+## Ejemplos de Funciones
+La siguiente función tiene un parámetro o argumento: `r`, se llama la función con su nombre y el valor en que se quiere calcular.
+```{r}
+circumferencia <- function(r){
+    2*pi*r
+}
+print(circumferencia(2))
+```
+Se puede fijar el valor del parámetro y sellama la función sin valor, o se da un valor diferente e igualmente la función lo calcula.
+
+
+```{r}
+circumferencia1 <- function(r=1){
+    2*pi*r
+}
+print(circumferencia1())
+print(circumferencia1(2))
+```
+Se pueden poner varios parámetros:
+
+```{r}
+suma <- function(x, y){
+    x + y
+}
+print(suma(1, 2))
+```
+Se puede escribir el cuerpo de la función sin corchetes`{}` si se escribe en una sola línea:
+
+```{r}
+suma1 <- function(x, y) x + y
+print(suma1(1, 2))
+```
+Se pueden usar funciones dentro de una función.
+
+
+```{r}
+media_mediana <- function(vector){
+    media <- mean(vector)
+    mediana <- median(vector)
+    return(c(media, mediana))
+}
+print(media_mediana(c(1, 1, 1, 2, 3)))
+```
+```{r}
+resta <- function(x, y){
+    x - y
+}
+print(resta(x=3, y=1))
+print(resta(y=1, x=3))
+```
+```{r}
+calorias <- function(peso, estatura, edad=30){
+    (10 * peso) + (6.25 * estatura) - (5 * edad) - 161
+}
+print(calorias(60, 165))
+```
+
+```{r}
+f <- function(x,y,z){
+  x^2+y^2+z^2
+}
+body(f)
+formals(f)
+args(f)
+```
+## Funciones con condiciones
+
+```{r}
+parOimpar = function(x){
+  if(x %% 2 == 0)
+    return("par")
+  else
+    return("impar")
+} 
+
+print(parOimpar(4))
+print(parOimpar(3))
+```
+```{r}
+f = function(x) x^2*4+x/3
+print(f(4))
+print(f(-2))
+curve(f,main="Función f")
+```
+## Búsqueda de objetos en R
+```{r}
+search()
+```
+
+## Funciones con el mismo nombre en dos paquetes.
+
+La función `filter()` está en dos paquetes: `dplyr` y `base`, para distinguirlas se escribe el nombre del paquete y `::`.
+```
+dplyr::filter()
+base::filter()
+```
+
+
+
+
+
+

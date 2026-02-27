@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.40">
@@ -8,7 +8,7 @@
 
 <meta name="author" content="Carlos Lesmes">
 
-<title>El YAML</title>
+<title>Histograma a distribución de frecuencias</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,44 +58,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="yaml_files/libs/clipboard/clipboard.min.js"></script>
-<script src="yaml_files/libs/quarto-html/quarto.js"></script>
-<script src="yaml_files/libs/quarto-html/popper.min.js"></script>
-<script src="yaml_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="yaml_files/libs/quarto-html/anchor.min.js"></script>
-<link href="yaml_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="yaml_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="yaml_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="yaml_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="yaml_files/libs/bootstrap/bootstrap-3119dc400b02922c27171a4b76b1a7ff.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="Hist_to_table_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Hist_to_table_files/libs/quarto-html/quarto.js"></script>
+<script src="Hist_to_table_files/libs/quarto-html/popper.min.js"></script>
+<script src="Hist_to_table_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Hist_to_table_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Hist_to_table_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Hist_to_table_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Hist_to_table_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Hist_to_table_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Hist_to_table_files/libs/bootstrap/bootstrap-973236bd072d72a04ee9cd82dcc9cb29.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
 
-<body>
+<body class="fullcontent">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Tabla de contenidos</h2>
-   
-  <ul>
-  <li><a href="#el-yaml" id="toc-el-yaml" class="nav-link active" data-scroll-target="#el-yaml"><span class="header-section-number">1</span> El YAML</a>
-  <ul class="collapse">
-  <li><a href="#title-author-y-date" id="toc-title-author-y-date" class="nav-link" data-scroll-target="#title-author-y-date"><span class="header-section-number">1.1</span> <code>title</code>, <code>author</code> y <code>date</code></a></li>
-  <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format"><span class="header-section-number">1.2</span> <code>format</code></a></li>
-  <li><a href="#toc-y-toc-float" id="toc-toc-y-toc-float" class="nav-link" data-scroll-target="#toc-y-toc-float"><span class="header-section-number">1.3</span> <code>toc</code> y <code>toc-float</code></a></li>
-  <li><a href="#number-sections-y-code-fold" id="toc-number-sections-y-code-fold" class="nav-link" data-scroll-target="#number-sections-y-code-fold"><span class="header-section-number">1.4</span> <code>number-sections</code> y <code>code-fold</code></a></li>
-  <li><a href="#un-ejemplo-de-otro-yaml" id="toc-un-ejemplo-de-otro-yaml" class="nav-link" data-scroll-target="#un-ejemplo-de-otro-yaml"><span class="header-section-number">1.5</span> Un ejemplo de otro <code>yaml</code></a></li>
-  </ul></li>
-  </ul>
-</nav>
-</div>
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">El YAML</h1>
+<h1 class="title">Histograma a distribución de frecuencias</h1>
 </div>
 
 
@@ -103,18 +88,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
              <p>Carlos Lesmes </p>
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Fecha de publicación</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">19 de febrero de 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -124,97 +103,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="el-yaml" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> El YAML</h1>
-<p>El YAML de este documento es el encabezado del documento <code>.qmd</code> antes de <em>renderizarlo</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Estas son las opciones <code>yaml</code> del documento, es decir los metadatos<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> del escrito. Al escribirlo se debe respetar la indentación, se encuentra separado al inicio del documento por tres guiones al comienzo y tres guiones al final. Para saber más vea <a href="https://www.ibm.com/es-es/think/topics/yaml">aquí</a>.</p>
-<pre><code>---
-title: El YAML
-author: Carlos Lesmes
-date: "2026-02-19"
-format:
-   html:
-       theme: journal
-       toc: true
-       toc_float: true
-       number-sections: true
-       code-fold: show
-lang : es
----</code></pre>
-<p>Vea más información del YAML <a href="https://rpubs.com/gustavomtzv/874870">aquí</a></p>
-<section id="title-author-y-date" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="title-author-y-date"><span class="header-section-number">1.1</span> <code>title</code>, <code>author</code> y <code>date</code></h2>
-<p>Son respectivamente el título, el autor y la fecha del documento. Dejar un espacio después de los dos puntos y escribir los datos deseados. Las palabras clave <code>title</code>, <code>author</code> y <code>date</code> no se deben cambiar.</p>
-</section>
-<section id="format" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="format"><span class="header-section-number">1.2</span> <code>format</code></h2>
-<p>Aquí se especifíca el formato de salida del documento, en este caso <code>html</code>. Dentro de html están las siguientes opciones:</p>
-<ol type="1">
-<li>theme: journal</li>
-<li>toc: true</li>
-<li>toc_float: true</li>
-<li>number-sections: true</li>
-<li>code-fold: show</li>
-</ol>
-<p>La opción <code>theme</code> permite escoger un color específico para los títulos, enlaces, etc. Puede cambiar el tema <code>journal</code> por otros 24 que encontrará en <a href="https://quarto.org/docs/output-formats/html-themes.html">Temas</a>.</p>
-</section>
-<section id="toc-y-toc-float" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="toc-y-toc-float"><span class="header-section-number">1.3</span> <code>toc</code> y <code>toc-float</code></h2>
-<p>Muestran respectivamente la tabla de contenido y la mantiene siempre visible con la opción <code>true</code>. Si no se desea que lo hagan use <code>false</code>.</p>
-</section>
-<section id="number-sections-y-code-fold" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="number-sections-y-code-fold"><span class="header-section-number">1.4</span> <code>number-sections</code> y <code>code-fold</code></h2>
-<p>Enumera los títulos y subtítulos y <code>code-fold</code> permite ver y ocultar el código R en el documento haciendo clic en el triángulo-Código a continuación:</p>
 <div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>,<span class="at">nrow =</span> <span class="dv">4</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>m</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">21</span>, <span class="dv">22</span>, <span class="dv">22</span>, <span class="dv">22</span>, <span class="dv">25</span>, <span class="dv">28</span>, <span class="dv">30</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">42</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">55</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">hist</span>(data, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>cortes <span class="ot">&lt;-</span> h<span class="sc">$</span>breaks</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>frecuencia <span class="ot">&lt;-</span> h<span class="sc">$</span>counts</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>frec_acum <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(frecuencia)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>f_relativa <span class="ot">&lt;-</span> frecuencia<span class="sc">/</span><span class="fu">length</span>(data)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fr_acum <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(f_relativa)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>intervalos <span class="ot">&lt;-</span> <span class="fu">paste</span>(cortes[<span class="sc">-</span><span class="fu">length</span>(cortes)], cortes[<span class="sc">-</span><span class="dv">1</span>], <span class="at">sep =</span> <span class="st">" - "</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>freq_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Intervalos =</span> intervalos, <span class="at">Frequencia =</span> frecuencia, <span class="at">f_acum=</span>frec_acum, <span class="at">f_relativa=</span>f_relativa, <span class="at">fr_acum=</span>fr_acum)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freq_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2] [,3] [,4]
-[1,]    1    5    9   13
-[2,]    2    6   10   14
-[3,]    3    7   11   15
-[4,]    4    8   12   16</code></pre>
+<pre><code>  Intervalos Frequencia f_acum f_relativa fr_acum
+1    10 - 20          4      4       0.20    0.20
+2    20 - 30          8     12       0.40    0.60
+3    30 - 40          3     15       0.15    0.75
+4    40 - 50          4     19       0.20    0.95
+5    50 - 60          1     20       0.05    1.00</code></pre>
 </div>
 </div>
-<p>El elemento (2,2) de la matriz es 6.</p>
-<p>Por último, para que las opciones salgan en español use <code>lang: es</code>. Los tags para ingles, francés y alemán son respectivamente <code>en</code>, <code>fr</code> y <code>de</code>.</p>
-<p>Recuerde que se debe respetar la indentación, es decir, la sangría.</p>
-</section>
-<section id="un-ejemplo-de-otro-yaml" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="un-ejemplo-de-otro-yaml"><span class="header-section-number">1.5</span> Un ejemplo de otro <code>yaml</code></h2>
-<pre><code>---
-author: Carlos lesmes
-title: Primer documento
-date: "2026-02-19"
-format: 
-  html:
-    code-fold: true
-    embed-resources: true
-toc: true
-lang: "es"
-number-sections: true
-theme:
-  light: flatly
-  dark: darkly
-warning: false
-bibliography: biblio.bib
----</code></pre>
-<p>En este caso</p>
-<p><code>theme:   light: flatly   dark: darkly</code> permite cambiar el documento de light(blanco) a dark(negro). La opción <code>warining: false</code> no imprime los warnings generados por <code>R</code>.</p>
-<p>El archivo de bibliografía que acompaña al documento debe tener el nombre <code>biblio.bib</code>.</p>
-</section>
-</section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notas</h2>
-
-<ol>
-<li id="fn1"><p>render: the process of converting code into viewable, interactive web content<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>datos de los datos<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main>
+</main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -259,12 +174,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiado");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copiado");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

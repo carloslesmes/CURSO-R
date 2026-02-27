@@ -1,0 +1,603 @@
+---
+title: Medidas Descriptivas en R
+author: Carlos Lesmes
+date: Febrero 2026
+format:
+  typst:
+    toc: true
+    section-numbering: 1.1.1
+lang : es
+---
+
+```{=typst}
+#pagebreak()
+```
+
+Consideremos el siguiente conjunto de datos y sus poderaciones:
+
+```{r}
+set.seed(15)
+datos <- rexp(50)
+pesos <- runif(50) 
+```
+
+## Primeros pasos
+
+Calcular máximo, mínimo, tamaño y hacer un histograma:
+```{r}
+min(datos)
+max(datos)
+length(datos)
+hist(datos,col = 'steelblue', main = 'Histograma', xlab='datos',ylab='Frecuencia',freq = FALSE)
+```
+
+## Medidas de tendencia central
+
+Una medida de tendencia central o promedio para un conjunto de datos cuantitativos es un valor entre el dato mínimo y el dato máximo
+
+### Media aritmética ponderada
+
+```{=typst}
+Sea un conjunto de datos $\{X_1,X_2,...,X_n\}$ y sean $w_1,w_2,...,w_n$ las ponderaciones de los $x_i$, respectivamente, entonces la media aritmética de los $x_i$ ponderada por los $w_i$ está dad por:
+
+$ M[X]=overline(X)=(sum_(i=1)^(n) X_i w_i )/ (sum_(i=1)^(n) w_i ) $\
+```
+
+
+```{r}
+media_pon =weighted.mean(datos,pesos)
+```
+
+
+```{r}
+cat("Media ponderada =",media_pon)
+```
+
+```{r}
+media_pon1 = 1/sum(pesos)*sum(datos*pesos)
+media_pon1
+```
+### Media aritmética
+
+```{=typst}
+Sea un conjunto de datos $\{X_1,X_2,...,X_n\}$, entonces la media aritmética de los $x_i$ está dada por:
+
+$ M[X]= overline(X)=display(sum_(i=1)^(n) X_i )/ n $
+```
+En la media aritmética ponderada cuando todas las ponderaciones son iguales.
+
+```{r}
+mean(datos)
+1/length(datos)*sum(datos)
+```
+### Mediana
+
+Es un valor que supera el 50\% de los datos y es superado por el otro 50\%.
+
+```{=typst}
+#set math.cases(gap: 1em)
+$ M e[X]= cases(
+"Ordenar los datos",
+"Si n es par    " & display((X_(n/2)+X_(n/2+1))/2),
+"Si n es impar    " & display(X_((n+1)/2)),
+  ) $
+```
+
+
+```{r}
+median(datos)
+```
+### Moda
+
+```{=typst}
+Sea un conjunto de datos $\{X_1,X_2,...,X_n\}$, entonces la moda es el valor que más se repite en el conjunto de datos. 
+
+ $ M o(X) : "La moda es el dato que más se repite" $
+```
+
+
+```{r}
+names(which.max(table(datos)))
+```
+### Media geométrica
+
+
+```{=typst}
+Sea un conjunto de datos $\{X_1,X_2,...,X_n\}$ positivos , entonces la media geométrica está dada por:
+
+$ M g(X) = display(root(n,X_1 X_2 ... X_n)) = display((attach(Pi, b: i=1, t: n) X_i)^(1/n))=display(10^(M[log(X)]))=display(e^(M[ln (X)])) $
+```
+Se utiliza para promediar tasas o índices.
+
+```{r}
+mg=prod(datos)^(1/length(datos))
+mg
+```
+```{r}
+exp(1)^mean(log(datos,exp(1)))
+```
+```{r}
+10^mean(log(datos,10))
+```
+### Media armónica
+
+```{=typst}
+Sea un conjunto de datos $\{X_1,X_2,...,X_n\}$ positivos diferentes de cero, entonces la media armónica está dada por:
+
+$ M a(X) = display(1/(1/n display(sum_(i=1)^(n) 1/X_i)) = display(1/(M[1/X]))) $
+```
+
+
+```{r}
+ma = 1/(1/length(datos)*sum(1/datos))
+ma
+```
+```{r}
+1/mean(1/datos)
+```
+### Media general de orden h
+
+```{=typst}
+Sea un conjunto de datos $\{X_1,X_2,...,X_n\}$ positivos diferentes de cero, entonces la media general de orden $p in RR-\{0\}$ está dada por:
+
+$ M_p (X) = display((1/n sum_(i=1)^(n) X_i^p)^(1/p)) $
+
+#v(10pt)
+Casos especiales
+
+$ M_1 (X) = M(X) $
+$ M_(-1) = M a(X) $
+$ M_(p -> 0) = M g(X) $
+$ M_(p -> oo) = X_("máx") $
+$ M_(p -> - oo) = X_("mín") $
+```
+
+
+```{r}
+mh <- function(data,h){
+  (mean(data^h))^(1/h)
+}
+mh(datos,2.5)
+```
+### Propiedad
+
+```{=typst}
+$ X_("mín")<= dots <= M a (X)=M_(-1)(x)<= M g (X)=M_0 (X)<= M(X)=M_1(X) <= dots<= X_("máx") $
+```
+
+
+## Percentiles
+
+```{=typst}
+El percentil k-ésimo de $X, P_k (X)$, $0 <= k <= 100$, está dado por:
+
+$ P_k (X) = cases(
+    1. "Ordenar los datos" &,
+  
+    2. "Calcular"   & i = (k n) / 100 ,
+    
+    3. cases(
+    "Si i es entero   " &   display((X_i + X_(i+1))/2) ,
+    "Si i no es entero   " & display(X_([i]+1)), )
+)
+$
+
+$[i]$ es la parte entera de i.
+```
+
+
+El percentil k de un conjunto de datos, $P_k$ es un valor que supera el k\% de los datos y es superado por el (100-k)\% de los datos, $0 \le k \le 100$.
+
+```{r}
+p37 =quantile(datos,.37) #percentil 37
+p37
+```
+```{r}
+quantile(datos)
+```
+```{r}
+quantile(datos,prob=c(.05,0.22,0.43,.95))
+```
+### Recorrido Intercuartílico
+
+```{=typst}
+$ I Q R(X)= P_(75)(X)-P_(25)(X)=Q_3(X)-Q_1(X) $
+```
+
+```{r}
+IQR(datos)
+```
+### Diagrama de Caja, box and whiskers, boxplot
+
+```{r}
+boxp =boxplot(datos,horizontal = TRUE,col = 'steelblue',main="datos")
+```
+```{r}
+str(boxp)
+boxp
+boxp[3] # outliers
+```
+```{=typst}
+== Cuartiles
+`nquantile(X,4)`
+
+#v(10pt)
+Hay tres cuartiles: $Q_1 ,Q_2 ,Q_3$:
+#v(10pt)
+$ Q_1 (X) = P_(25) (X) , quad Q_2 (X) = P_(50) (X) , quad Q_3 (X) = P_(75) (X) $
+#v(10pt)
+== Deciles
+`nquantile(X,10)`
+
+Hay nueve deciles: $D_1 ,D_2,...,D_9$:
+#v(10pt)
+$ D_1 (X) = P_(10) (X), D_2(X) = P_(20) (X), ..., D_9 (X) = P_(90) (X) $
+#v(10pt)
+=== Propiedad
+#v(10pt)
+$ Q_2=D_5=P_(50)=M e (X) $
+```
+
+```{=typst}
+== Recorrido intercuartílico
+
+#v(10pt)
+El recorrido intercuartílico, $R I Q (X)$, es la diferencia entre el tercer y el primer cuartil, es el rango del 50% central de los datos:
+#v(10pt)
+$ R I Q (X) = Q_3 (X) - Q_1 (X) = P_(75) (X) - P_(25) (X) $
+#v(10pt)
+
+== Bigotes
+#v(10pt)
+
+$ B_1 = Q_1 - 1.5 quad R I Q (X) = P_(25) - 1.5 quad R I Q (X) $
+$ B_2 = Q_3 + 1.5 quad R I Q (X) = P_(75) + 1.5 quad R I Q (X) $
+```
+
+Los datos menores al bigote 1 y/o mayores al bigote 2 se llaman datos **atípicos**, datos extremos o **outliers**. Un outlier es un dato muy grande o muy pequeño con respecto a los demás. 
+
+## Medidas de dispersión
+
+### Rango
+
+```{=typst}
+$ R(X) = X_("max") - X_("min") $
+```
+
+
+```{r}
+rango=range(datos)
+rango
+rango[2]-rango[1]
+```
+### Recorrido intercuartílico
+
+```{r}
+IQR(datos)
+quantile(datos,.75)-quantile(datos,.25)
+```
+
+### Varianza muestral
+
+```{=typst}
+$ S^2_X = display(1/(n-1) sum_(i=1)^(n) (X_i - overline(X))^2) $
+```
+
+
+```{r}
+var(datos)
+1/(length(datos)-1)*sum((datos-mean(datos))^2)
+```
+### Desviación estándar muestral
+
+```{=typst}
+$ sigma_X = display(sqrt(sigma^2_X)) = display(sqrt(1/n sum_(i=1)^(n) (X_i - overline(X))^2)) $
+```
+
+
+```{r}
+sd(datos)
+sqrt(var(datos))
+sqrt(1/(length(datos)-1)*sum((datos-mean(datos))^2))
+```
+### Varianza poblacional
+
+```{=typst}
+$ sigma^2_X = display(1/n sum_(i=1)^(n) (X_i - overline(X))^2) $
+```
+
+
+```{r}
+(length(datos)-1)/length(datos)*var(datos)
+```
+### Desviación estándar poblacional
+
+```{=typst}
+$ sigma_X = display(sqrt(sigma^2_X)) = display(sqrt(1/n sum_(i=1)^(n) (X_i - overline(X))^2)) $
+```
+
+
+```{r}
+sqrt((length(datos)-1)/length(datos)*var(datos))
+```
+### Suma de cuadrados
+Otra medida de dispersión:
+
+```{=typst}
+$ S C = display(sum_(i=1)^(n) (X_i - overline(X))^2) $
+```
+
+Es, en realidad, $n$ veces la varianza poblacional o $(n-1)$ veces la varianza muestral.
+
+```{r}
+SC = sum(datos-mean(datos))^2
+SC
+```
+
+
+### Desviación media
+
+```{=typst}
+$ D_M (X) = display(1/n sum_(i=1)^(n) |X_i - overline(X)|)  $
+```
+
+
+```{r}
+1/length(datos)*sum(abs(datos-mean(datos)))
+```
+
+### Coeficiente de variación muestral
+
+El CV no tiene unidades y se expresa en porcentaje. Se utiliza para comparar la dispersión relativa de dos o más distribuciones.
+
+```{=typst}
+$ C V (X) =  display(S_X / overline(X)) =  display(S_X / M(X)) $
+```
+
+
+```{r}
+sd(datos)/mean(datos)*100
+```
+
+### Puntaje estandarizado o normalización
+
+Es el número de desviaciones estándar que separan un dato de la media aritmética. Para estandarizar o normalizar un dato:
+
+```{=typst}
+$ Z=(x-M(X))/s(X) $
+```
+
+```{r}
+scale(datos)[1:50]
+```
+
+```{r}
+z=(datos-mean(datos))/sd(datos)
+z
+```
+
+## Medidas de forma
+
+### Momentos
+
+```{=typst}
+Momento de orden $r$ con respecto al origen.
+$ mu_r^' (X)= 1/n sum_(i=1)^n X_i^r $
+Momento de orden $r$ con respecto a la media.
+$ mu_r (X)=1/n sum_(i=1)^n (X_i - overline(X))^r , quad r=0,1,2,... $
+=== Casos especiales
+#v(10pt)
+
+$ mu_0 (X) = 1 $
+$ mu_1 (X) = 0 $
+
+$ mu_2 (X) = sigma^2_X = V(X) $
+$ mu_3 (X) = display(1/n sum_(i=1)^(n) (X_i - dash(X))^3) $
+$ mu_4 (X) = display(1/n sum_(i=1)^(n) (X_i - dash(X))^4) $
+
+$ mu_r = display(sum_(i=0)^r (-1)^i binom(r,i) mu^i mu_(r-i)^') $
+```
+
+
+```{r}
+library(moments)
+all.moments(datos,central=TRUE,order.max = 4)
+all.moments(datos,absolute = TRUE,order.max = 4)
+```
+```{=typst}
+== Coeficiente de sesgo o asimetría
+
+$ gamma_1 (X) = display((mu_3 (X))/(sigma^3_(X))) $
+
+== Coeficiente de curtosis o apuntamiento
+
+$ gamma_2 (X) = display((mu_4 (X))/(sigma^4_(X))) $
+```
+
+
+```{r}
+skewness(datos)
+kurtosis(datos)
+```
+
+
+```{=typst}
+= Propiedades de la media y de la varianza
+ Sean  $a$ y $b$ constantes y $X$ una variable, se cumple:
+
++ $M(a)=a$
++ $M(a X + b) = a M(X)+b$
++ $V(X) >= 0$
++ $V(a)=0$
++ $V(a X + b) = a^2 V (X)$
+```
+
+```{=typst}
+Para m grupos se sabe:
+#v(10pt)
+#align(center, table(columns: 4, align: center, 
+[*Grupo*],[*Número de elementos*],[*Media*], [*Varianza*],
+table.hline(),
+[1], [$n_1$], [$overline(X)_1$], [V(X_1)],
+[2], [$n_2$], [$overline(X)_2$], [V(X_2)],
+[$dots.v$], [$dots.v$], [$dots.v$], [$dots.v$],
+table.hline(),
+[m], [$n_m$], [$overline(X)_m$], [V(X_m)],
+))
+
+
+Entonces, la media y la varianza de todos los elementos como si fueran un solo grupo están dadas por:
+
+#v(10pt)
+
+$ M_T (X) = display(display(sum_(i=1)^(m) n_i overline(X)_i)/display(sum_(i=1)^(m) n_i)) "   media total" $
+$ V_T (X) = display(sum_(i=1)^(m) n_i (overline(X)_i - M_T (X))^2)/display(sum_(i=1)^(m) n_i) + display(sum_(i=1)^(m) n_i V(i))/display(sum_(i=1)^(m) n_i) "   varianza total " $ 
+$ V_T (X) = V(M(X_i))+M(V(i)) $ 
+$ V_T (X) = sigma^2_w + sigma^2_b $
+#align(center,[Varianza total = Intravarianza + Intervarianza])
+```
+
+En el caso en que todas las $n_i=n$ son iguales y se tiene:
+
+```{=typst}
+$ M_T (X) = display(1/m sum_(i=1)^(m) overline(X)_i) $
+$ V_T (X) = display(sum_(i=1)^(m) (overline(X)_i - M_T (X))^2)/m + display(sum_(i=1)^(m) V(i))/m $ 
+$ V_T (X) = V(M(X_i))+M(V(i)) $ 
+$ V_T (X) = sigma^2_w + sigma^2_b $
+#align(center,[Varianza total = Intravarianza + Intervarianza])
+```
+
+Si multiplicamos por m se obtienen las sumas de cuadrados:
+
+```{=typst}
+$ m V(X) = m V(M()) + m M(V()) $
+$ sum_(i=1)^n sum_(j=1)^m (X_(i j)-M_T)^2 = sum_(i=1)^(m) (overline(X)_i - M_T (X))^2 + sum_(i=1)^(m) V(i) $
+$ S C T = S C W + S C B $
+```
+Llamadas respectivamente
+
+SCT : suma de cuadrados total
+
+SCW : suma de cuadrados dentro
+
+SCB : suma de cuadrados entre
+
+## Ejercicio
+Creemos un conjunto de datos con 60 datos, dividido en 6 grupos:
+
+```{r}
+m = matrix(rexp(60),nrow = 10,ncol = 6)
+m
+```
+
+Calculemos la varianza de todos los datos:
+```{r}
+var(c(m))
+```
+
+
+convertido a `dataframe` queda:
+
+```{r}
+m = as.data.frame(m)
+m
+```
+
+
+Media y varianza de los grupos (columnas de m):
+```{r}
+ms = colMeans(m)
+vars = sapply(m, var)
+ms;vars
+```
+
+
+Media de las varianzas y varianza de las medias:
+```{r}
+MV = mean(vars)
+VM = var(ms)
+```
+
+```{r}
+MV + VM
+```
+
+## Estadística bivariada
+
+Ahora tenemos dos variables relacionadas X y Y.
+
+```{r}
+X <- rnorm(25)
+Y <- rexp(25)
+```
+
+
+### Covarianza cov(X,Y)
+
+La covarianza es una medida de asociación de dos variables.
+
+```{=typst}
+$ c o v(X, Y) = (sum_(i=1)^n (x_i - overline(x))(y_i - overline(y))) / (n - 1) "muestral" $
+$ c o v(X, Y) = (sum_(i=1)^n (x_i - overline(x))(y_i - overline(y))) / N "poblacional" $
+```
+
+Si la covarianza es positiva decimos que las variables son directamente proporcionales, es decir que si una crece la otra también crece, i la covarianza es negativa decimos que las variables son inversamente proporcionales, es decir que si una crece la otra decrece. Si es cero decimos que las variables no están relacionadas.
+
+```{r}
+var(X,Y)
+```
+
+Normalizando la covarianza se obtiene:
+
+### Coeficiente de Correlación 
+
+El coeficiente de correlación es una medida de asociación lineal de las dos variables.
+
+```{r}
+plot(X,Y,main = "X vs Y")
+```
+
+
+```{=typst}
+$ rho = (c o v(x, y)) / (sigma_x sigma_y) $
+$ r = (c o v(x, y)) / (S(x) S(y)) $
+```
+
+Siempre se tiene que 
+
+
+```{=typst}
+$ -1<= rho <= 1 $
+$ -1<= rho <= 1 $
+```
+
+```{r}
+var(X,Y)
+cor(X,Y)
+```
+
+ Matriz de covarianzas:
+ 
+```{r}
+df = data.frame(x=X, y=Y)
+var(df)
+```
+
+Matriz de correlaciones:
+
+```{r}
+cor(df)
+```
+
+```{r}
+pairs(df)
+```
+
+## Tareas
+
+Cree una función que 
+
+1. calcule los percentiles 
+2. estandarice un conjunto de datos
+3. calcule los momentos
+4. calcule la media general

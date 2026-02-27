@@ -1,0 +1,70 @@
+---
+title: Distribucines Normal, t de Student, Chi-cuadrado y F
+subtitle: Evaluación en R
+author: Carlos Lesmes
+date: Febrero 2026
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    toc-depth: 2
+    number-sections: true
+    code-fold: show
+    df-print: kable
+    embed-resources: true
+lang : es
+warning: false
+---
+
+
+# Distribución Normal 
+
+La distribución normal estándar es representada por una curva en forma de campana con área bajo la curva igual a 1. La curva es simétrica respecto al eje y. Es decir, a la izquierda del eje y el área es 0.5 y de igual menera a la derecha. Decimos que una variable $X$ tiene distribución normal estándar y escribimos $X \sim N(0,1)$.
+
+Para graficarla en R:
+
+```{r primero}
+options(digits = 4)
+curve(dnorm(x),-3,3,main="Distribución Normal Estándar")
+abline(v=0,add=TRUE)
+```
+
+La media y la varianza son, respectivamente, $\mu=0$ y $\sigma^2=1$.
+
+En R hay una función para hallar el área bajo la curva normal:
+
+Para hallar las siguientes áreas en R:
+
+$P(X \le 2)$, $P(X\ge -1)$, $P(1 \le X \le 2.5$
+
+```{r}
+pnorm(2)
+1-pnorm(-1)
+pnorm(2.5)-pnorm(1)
+```
+
+# Distribución normal no estándar
+
+La distribución normal no estándar es una campana cetarada en $\mu \in \mathbb{R}$ y con desviación estándar $\sigma >0$. Escribimos $X \sim N(\mu,\sigma)$ tiene dist
+
+## Ejemplo
+
+```{r}
+mu =40
+sigma = 8
+curve(dnorm(x,mu,sigma),main="Distribución N(40,8)",16,64)
+segments(42,-1,42,0.15, add=TRUE)
+segments(55,-1,55,0.02,add=TRUE)
+text(x = 48, y = 0.01, labels = "P(42<X<55)", col = "blue")
+text(x = 25, y = 0.025, labels = "pnorm(55,40,8)-pnorm(42,40,8)", col = "red")
+arrows(35,0.025,48,0.015,col = 'green')
+```
+
+```{r}
+x=c(1,2,3)
+y=c(4,5,2)
+plot(x, y, xaxt = "n", yaxt = "n")
+```
+
+
