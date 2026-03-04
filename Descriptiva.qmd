@@ -146,10 +146,10 @@ $ M_p (X) = display((1/n sum_(i=1)^(n) X_i^p)^(1/p)) $
 Casos especiales
 
 $ M_1 (X) = M(X) $
-$ M_(-1) = M a(X) $
-$ M_(p -> 0) = M g(X) $
-$ M_(p -> oo) = X_("máx") $
-$ M_(p -> - oo) = X_("mín") $
+$ M_(-1)(X) = M a(X) $
+$ M_(p -> 0)(X) = M g(X) $
+$ M_(p -> oo)(X) = X_("máx") $
+$ M_(p -> - oo)(X) = X_("mín") $
 ```
 
 
@@ -291,7 +291,7 @@ var(datos)
 ### Desviación estándar muestral
 
 ```{=typst}
-$ sigma_X = display(sqrt(sigma^2_X)) = display(sqrt(1/n sum_(i=1)^(n) (X_i - overline(X))^2)) $
+$ S_X = display(sqrt(S^2_X)) = display(sqrt(1/n sum_(i=1)^(n) (X_i - overline(X))^2)) $
 ```
 
 
@@ -383,7 +383,7 @@ z
 ```{=typst}
 Momento de orden $r$ con respecto al origen.
 $ mu_r^' (X)= 1/n sum_(i=1)^n X_i^r $
-Momento de orden $r$ con respecto a la media.
+Momento de orden $r$ con respecto a la media o Momento central de orden r.
 $ mu_r (X)=1/n sum_(i=1)^n (X_i - overline(X))^r , quad r=0,1,2,... $
 === Casos especiales
 #v(10pt)
@@ -398,6 +398,11 @@ $ mu_4 (X) = display(1/n sum_(i=1)^(n) (X_i - dash(X))^4) $
 $ mu_r = display(sum_(i=0)^r (-1)^i binom(r,i) mu^i mu_(r-i)^') $
 ```
 
+Además los momentos son funciones homogéneas de grado $n$, es decir:
+
+```{=typst}
+$ mu_n (c X)= c^n mu_n (X) $
+```
 
 ```{r}
 library(moments)
@@ -537,8 +542,8 @@ Y <- rexp(25)
 La covarianza es una medida de asociación de dos variables.
 
 ```{=typst}
-$ c o v(X, Y) = (sum_(i=1)^n (x_i - overline(x))(y_i - overline(y))) / (n - 1) "muestral" $
-$ c o v(X, Y) = (sum_(i=1)^n (x_i - overline(x))(y_i - overline(y))) / N "poblacional" $
+$ op("Cov")(X, Y) = (sum_(i=1)^n (x_i - overline(x))(y_i - overline(y))) / (n - 1) "muestral" $
+$ op("Cov")(X, Y) = (sum_(i=1)^n (x_i - overline(x))(y_i - overline(y))) / N "poblacional" $
 ```
 
 Si la covarianza es positiva decimos que las variables son directamente proporcionales, es decir que si una crece la otra también crece, i la covarianza es negativa decimos que las variables son inversamente proporcionales, es decir que si una crece la otra decrece. Si es cero decimos que las variables no están relacionadas.
@@ -559,17 +564,10 @@ plot(X,Y,main = "X vs Y")
 
 
 ```{=typst}
-$ rho = (c o v(x, y)) / (sigma_x sigma_y) $
-$ r = (c o v(x, y)) / (S(x) S(y)) $
+$ rho = (op("Cov")(X, Y)) / (sigma_X sigma_Y) $
+$ r = (op("Cov")(X, Y)) / (S(X) S(Y)) $
 ```
 
-Siempre se tiene que 
-
-
-```{=typst}
-$ -1<= rho <= 1 $
-$ -1<= rho <= 1 $
-```
 
 ```{r}
 var(X,Y)
@@ -592,6 +590,26 @@ cor(df)
 ```{r}
 pairs(df)
 ```
+## Propiedades de la Covarianza
+
+Sean  $a,b,c$ constantes, se tiene:
+```{=typst}
+1. $ op("Cov")(X,Y)= M(X Y)-M(X)M(Y) $
+2. $ op("Cov")(X,c)=0 $
+3. $ op("Cov")(a X,b Y)= a b op("Cov")(X,Y) $
+4. $ sigma^2 (X)= op("Cov")(X,X) $
+5. $ op("Cov")(X+a,Y+b)=op("Cov")(X,Y) $
+6. $ op("Cov")(-X,Y)=-op("Cov")(X,Y) $
+```
+
+## Propiedades del coeficiente de correlación
+
+
+```{=typst}
+$ -1<= rho <= 1 $
+$ -1<= r <= 1 $
+```
+
 
 ## Tareas
 

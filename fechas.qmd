@@ -1,0 +1,47 @@
+---
+title: Fechas
+author: Carlos Lesmes
+date: Febrero 2026
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    toc-depth: 2
+    number-sections: true
+    code-fold: show
+    df-print: kable
+    embed-resources: true
+lang : es
+warning: false
+---
+
+## Fechas en R
+
+```{r}
+suppressMessages(library(lubridate))
+ymd("20110604")
+mdy("06-04-2011")
+dmy("04/06/2011")
+```
+```{r}
+library(readr)
+library(xts)
+ventas <- read_csv("ventas.csv")
+str(ventas)
+ventas$Period <- dmy(ventas$Period)
+names(ventas)
+```
+
+```{r}
+data_matrix <- as.matrix(ventas[, c("Revenue", "Sales_quantity","Average_cost","The_average_annual_payroll_of_the_region")])
+time_index <- as.POSIXct(ventas$Period)
+multivariate_xts <- xts(x = data_matrix, order.by = time_index)
+multivariate_xts
+```
+```{r}
+library(dygraphs)
+dygraph(ventas)
+```
+
+
