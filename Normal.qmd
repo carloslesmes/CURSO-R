@@ -2,7 +2,7 @@
 title: Distribucines Normal, t de Student, Chi-cuadrado y F
 subtitle: Evaluación en R
 author: Carlos Lesmes
-date: Febrero 2026
+date: "`r Sys.Date()`"
 format:
   html:
     theme: materia
@@ -53,18 +53,47 @@ La distribución normal no estándar es una campana cetarada en $\mu \in \mathbb
 ```{r}
 mu =40
 sigma = 8
-curve(dnorm(x,mu,sigma),main="Distribución N(40,8)",16,64)
+curve(dnorm(x,mu,sigma),main="Distribución N(40,8)",16,64,lwd=3)
 segments(42,-1,42,0.15, add=TRUE)
 segments(55,-1,55,0.02,add=TRUE)
 text(x = 48, y = 0.01, labels = "P(42<X<55)", col = "blue")
 text(x = 25, y = 0.025, labels = "pnorm(55,40,8)-pnorm(42,40,8)", col = "red")
 arrows(35,0.025,48,0.015,col = 'green')
 ```
+```
+dnorm(x, mean = 0, sd = 1, log = FALSE)
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+rnorm(n, mean = 0, sd = 1)
+```
+
+# Distribución t de Student
 
 ```{r}
-x=c(1,2,3)
-y=c(4,5,2)
-plot(x, y, xaxt = "n", yaxt = "n")
+curve(dt(x,1),-4,4, ylim=c(0,.4),main="Distribución t de Student")
+curve(dt(x,7),-4,4,add = TRUE, col='blue')
+curve(dt(x,15),-4,4,add = TRUE, col='red')
+curve(dt(x,30),-4,4,add = TRUE, col='green',lwd=3)
+```
+```
+dt(x, df, ncp, log = FALSE)
+pt(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
+qt(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
+rt(n, df, ncp)
+```
+
+# Distribución chi-cuadrado
+
+```{r}
+curve(dchisq(x,5),0,15,main="Distribución chi-cuadrado", col='blue',lwd=3)
+```
+
+
+```
+dchisq(x, df, ncp = 0, log = FALSE)
+pchisq(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
+qchisq(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
+rchisq(n, df, ncp = 0)
 ```
 
 

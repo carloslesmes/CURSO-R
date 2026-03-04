@@ -137,6 +137,21 @@ La función `filter()` está en dos paquetes: `dplyr` y `base`, para distinguirl
 dplyr::filter()
 base::filter()
 ```
+## Pipes
+
+El operador pipeline `%>%` es útil para concatenar múltiples operaciones. `x %>% f` es equivalente a `f(x)`.
+
+### Ejemplos
+
+```{r}
+library(magrittr)
+log(5)
+5 %>% log
+```
+```{r}
+3 %>% sin %>% cos %>% log10()
+log10(cos(sin(3)))
+```
 
 
 

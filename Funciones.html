@@ -3095,6 +3095,10 @@ vertical-align: -.125em;
   <li><a href="#funciones-con-condiciones" id="toc-funciones-con-condiciones" class="nav-link" data-scroll-target="#funciones-con-condiciones"><span class="header-section-number">5</span> Funciones con condiciones</a></li>
   <li><a href="#búsqueda-de-objetos-en-r" id="toc-búsqueda-de-objetos-en-r" class="nav-link" data-scroll-target="#búsqueda-de-objetos-en-r"><span class="header-section-number">6</span> Búsqueda de objetos en R</a></li>
   <li><a href="#funciones-con-el-mismo-nombre-en-dos-paquetes." id="toc-funciones-con-el-mismo-nombre-en-dos-paquetes." class="nav-link" data-scroll-target="#funciones-con-el-mismo-nombre-en-dos-paquetes."><span class="header-section-number">7</span> Funciones con el mismo nombre en dos paquetes.</a></li>
+  <li><a href="#pipes" id="toc-pipes" class="nav-link" data-scroll-target="#pipes"><span class="header-section-number">8</span> Pipes</a>
+  <ul class="collapse">
+  <li><a href="#ejemplos" id="toc-ejemplos" class="nav-link" data-scroll-target="#ejemplos"><span class="header-section-number">8.1</span> Ejemplos</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -3171,7 +3175,7 @@ vertical-align: -.125em;
         stopifnot(is.atomic(y))
     .Call(C_cov, x, y, na.method, FALSE)
 }
-&lt;bytecode: 0x12ac227b0&gt;
+&lt;bytecode: 0x140c4f248&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 </div>
@@ -3397,6 +3401,46 @@ NULL</code></pre>
 <p>La función <code>filter()</code> está en dos paquetes: <code>dplyr</code> y <code>base</code>, para distinguirlas se escribe el nombre del paquete y <code>::</code>.</p>
 <pre><code>dplyr::filter()
 base::filter()</code></pre>
+</section>
+<section id="pipes" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="pipes"><span class="header-section-number">8</span> Pipes</h2>
+<p>El operador pipeline <code>%&gt;%</code> es útil para concatenar múltiples operaciones. <code>x %&gt;% f</code> es equivalente a <code>f(x)</code>.</p>
+<section id="ejemplos" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="ejemplos"><span class="header-section-number">8.1</span> Ejemplos</h3>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.609438</code></pre>
+</div>
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">%&gt;%</span> log</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.609438</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">%&gt;%</span> sin <span class="sc">%&gt;%</span> cos <span class="sc">%&gt;%</span> <span class="fu">log10</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.004338886</code></pre>
+</div>
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log10</span>(<span class="fu">cos</span>(<span class="fu">sin</span>(<span class="dv">3</span>)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.004338886</code></pre>
+</div>
+</div>
+</section>
 </section>
 
 </main>
