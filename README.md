@@ -1,4 +1,4 @@
-# Curso de R para Administradores
+# Curso de R 
 
 1. Nociones básicas de R
 2. Importar datos de Excel
