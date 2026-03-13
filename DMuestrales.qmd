@@ -1,0 +1,112 @@
+---
+title: Distribuciones muestrales
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: journal
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    embed-resources: true
+    df-print: kable
+lang : es
+warning: false
+---
+
+# Paquetes a usar y alistamiento
+
+```{r}
+options(digits = 10)
+library(probs)
+```
+
+## Población y parámetros
+```{r}
+x <- c(20,19,17,16,15,12)
+x
+N <- length(x)
+cat("tamaño = ",N,"\n")
+mu <- mean(x)
+cat("media poblacional = ",mu,"\n")
+varp <- mean((x-mean(x))^2)
+cat("varianza poblacional = ",varp,"\n")
+dsp <- sqrt(varp)
+cat("desviación estándar poblacional", dsp,"\n")
+propob <- length(x[x<=15])/N
+cat("proporción poblacional de <= 15 = ",propob)
+```
+Dada la población `r x` ; encontramos los siguientes parámetros:
+
+| Parámetro           |   |
+|---------------------|---|
+| Media               | `r mu`  |
+| Varianza            | `r varp` |
+| Desviación estándar | `r dsp`  |
+| Proporción <= 15          | `r propob`  |
+| Tamaño             | `r N`|
+
+
+## Obtención de muestras de tamaño $n=2$
+
+```{r}
+n <- 2
+n
+muestras <- urnsamples(x,size = n, replace=FALSE,ordered=FALSE)
+muestras
+nm <- dim(muestras)[1]
+cat("número de muestras = ",nm,"\n")
+```
+
+## Distribuciones muestrales
+
+```{r}
+mum <- apply(muestras,1,mean)
+varmuest <- apply(muestras,1,var)
+funprop <- function(x){ length(x[x<=15])/n}
+propmuest <- apply(muestras,1,funprop)
+```
+
+Medias muestrales:
+
+`r mum`
+
+Varianzas muestrales:
+
+`r varmuest`
+
+Proporciones muestrales
+
+`r propmuest`
+
+## Factor de corrección
+
+El factor de corrección para poblaciones finitas está dado por
+
+$$
+fc = (N-n)/(N-1)
+$$
+
+```{r}
+fc <- (N-n)/(N-1)
+fc
+```
+
+
+```{r}
+mum <- mu
+mum
+sigma2m <- varp/n*fc; sigma2m
+mup <- propob;mup
+sigma2p <- propob*(1-propob)/n*fc; sigma2p
+mus2 <- N/(N-1)*varp;mus2
+
+sigma2s2 <- var(varmuest)*((nm-1)/nm);sigma2s2
+res <- matrix(c(mum,sigma2m,propob,sigma2p,mus2,sigma2s2),nrow=2)
+dimnames(res) <- list(c("media","varianza"),c("medias m.","prop m.","var m."))
+res
+df <- data.frame(mues=muestras,varmuest)
+df
+var(varmuest)*14/15
+```

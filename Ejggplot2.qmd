@@ -1,0 +1,111 @@
+---
+title: Ejercicio ggplot2 
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+warning: false
+---
+
+```{r}
+library(readr)
+library(tidyverse)
+churn <- read_csv("WA_Fn-UseC_-Telco-Customer-Churn.csv")
+show_col_types = FALSE
+str(churn)
+names(churn)
+```
+
+
+
+```{r}
+churn$Churn <- as.factor(churn$Churn)
+churn$Contract <- as.factor(churn$Contract)
+churn$InternetService <- as.factor(churn$InternetService)
+```
+
+
+```{r}
+ggplot(churn, aes(tenure)) +
+  geom_histogram(bins = 30,fill="blue",color="black")
+```
+
+```{r}
+ggplot(churn, aes(MonthlyCharges)) +
+  geom_histogram(bins = 30,fill="blue",color="black")
+```
+
+```{r}
+ggplot(churn, aes(TotalCharges)) +
+  geom_histogram(bins = 30,fill="blue",color="black")
+```
+
+```{r}
+ggplot(churn, aes(Churn)) +
+  geom_bar(fill="blue",color="black")
+```
+```{r}
+ggplot(churn, aes(Churn, MonthlyCharges)) +
+  geom_boxplot(fill="blue",color="black")
+```
+```{r}
+ggplot(churn, aes(MonthlyCharges, fill = Churn)) +
+  geom_density(alpha = 0.4)
+```
+```{r}
+ggplot(churn, aes(Contract, fill = Churn)) +
+  geom_bar(position = "fill")
+```
+
+```{r}
+ggplot(churn, aes(InternetService, fill = Churn)) +
+  geom_bar(position = "fill")
+```
+```{r}
+ggplot(churn, aes(tenure, MonthlyCharges)) +
+  geom_point(alpha = 0.4)
+```
+```{r}
+ggplot(churn, aes(tenure, MonthlyCharges, color = Churn)) +
+  geom_point(alpha = 0.4)
+```
+```{r}
+ggplot(churn, aes(tenure, MonthlyCharges, color = Churn)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm")
+```
+
+```{r}
+ggplot(churn, aes(tenure, MonthlyCharges)) +
+  geom_point(alpha = 0.4) +
+  facet_wrap(~Contract)
+```
+```{r}
+ggplot(churn, aes(tenure, MonthlyCharges)) +
+  geom_point(alpha = 0.4) +
+  facet_wrap(~InternetService)
+```
+
+```{r}
+ggplot(churn, aes(tenure, TotalCharges,
+                  size = MonthlyCharges,
+                  color = Churn)) +
+  geom_point(alpha = 0.6)
+```
+```{r}
+ggplot(churn, aes(tenure, MonthlyCharges, color = Churn)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(se = FALSE) +
+  theme_minimal() +
+  labs(title = "Customer Churn Analysis",
+       x = "Customer Tenure",
+       y = "Monthly Charges")
+```
+

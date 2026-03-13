@@ -13,6 +13,7 @@ format:
     df-print: kable
     embed-resources: true
 lang : es
+warning: false
 ---
 
 # Paquete `dplyr`

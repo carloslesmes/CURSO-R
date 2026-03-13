@@ -1,0 +1,156 @@
+---
+title: Paquete `Lattice` de R
+subtitle: y sus extensiones
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: materia
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    df-print: kable
+lang : es
+warning: false
+---
+
+```{r}
+library(lattice)
+show.settings()
+```
+
+# Funciones más comunes en `lattice`
+
+There are several functions available in the Lattice package that can be deployed for several purposes. Some of the most common functions used are the following:
+
+```
+xyplot()
+splom()
+cloud()
+stripplot()
+bwplot()
+dotplot()
+barchart()
+histogram()
+densityplot
+qqmath()
+qq()
+```
+
+```{r}
+xyplot(Sepal.Length ~ Petal.Length,
+       data = iris)
+```
+## Agregando categorías
+
+```{r}
+xyplot(Sepal.Length ~ Petal.Length,
+       data = iris,
+       group = Species,
+       auto.key = TRUE)
+```
+## Agregar línea de tendencia
+
+```{r}
+xyplot(Sepal.Length ~ Petal.Length,
+       data = iris,
+       type = c("p", "g", "smooth"),
+       xlab = "Petal.Length",
+       ylab = "Sepal.Length")
+```
+## Gráficos múltiples
+
+```{r}
+xyplot(Sepal.Length ~ Petal.Length | Species,
+       group = Species,
+       data = iris,
+       type = c("p", "smooth"),
+       scales = "free")
+```
+
+## Nube de puntos
+
+```{r}
+cloud(Sepal.Length ~ Sepal.Length*Petal.Width,
+      data = iris)
+```
+```{r}
+cloud(Sepal.Length ~ Sepal.Length*Petal.Width,
+      data = iris,
+      group = Species,
+      auto.key = TRUE)
+```
+
+
+## Boxplots
+
+```{r}
+bwplot(Sepal.Length ~ Species, data=iris)
+```
+
+Con el conjunto de datos `ToothGrowth`
+```{r}
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+bwplot(len ~ dose, data = ToothGrowth,
+       xlab = "Dose",
+       ylab = "Length")
+```
+
+```{r}
+bwplot(len ~ supp|dose,
+       data = ToothGrowth,
+       layout = c(3,1),
+       xlab = "Dose",
+       ylab = "Length")
+```
+
+```{r}
+bwplot(len ~ dose, data = ToothGrowth,
+           xlab = "Dose",
+           ylab = "Length",
+           panel = panel.violin)
+```
+
+```{r}
+dotplot(len ~ dose,
+        data = ToothGrowth,
+        xlab = "Dose",
+        ylab = "Length")
+```
+
+## Histograma
+
+```{r}
+histogram(~ len, data = ToothGrowth, 
+          breaks = 20)
+```
+
+```{r}
+students <- read.csv("https://userpage.fu-berlin.de/soga/data/raw-data/students.csv")
+str(students)
+```
+```{r}
+students100 <- students[1:100, ]
+xyplot(height ~ weight | gender,
+  data = students100,
+  ylab = "Height in cm",
+  xlab = "Weight in kg"
+)
+```
+```{r}
+xyplot(height ~ weight | religion,
+  data = students100,
+  ylab = "Height in cm",
+  xlab = "Weight in kg"
+)
+```
+
+```{r}
+xyplot(height ~ weight | religion * gender,
+  data = students100,
+  ylab = "Height in cm",
+  xlab = "Weight in kg"
+)
+```
+

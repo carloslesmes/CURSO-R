@@ -17,7 +17,7 @@ bibliography: biblio.bib
 
 # Paquete `ggplot2`
 
-El paquete `ggplot2` es un paquete que hace gráficas a partir de los datos. Primero, instálelo con `install.packages("ggplot2")` y activarlo con `library(ggplot2)`. Los paquetes `ggExtra` y `ggthemes` son paquetes adicionales que ayudan a mejorar sus gráficas, de igual forma se instalan y se activan. Para saber más vea @Rman y @HWggplot.
+El paquete `ggplot2` es un paquete que hace gráficas a partir de los datos. Primero, instálelo con `install.packages("ggplot2")` y activelo con `library(ggplot2)`. Los paquetes `ggExtra` y `ggthemes` son paquetes adicionales que ayudan a mejorar sus gráficas, de igual forma se instalan y se activan. Para saber más vea @Rman y @HWggplot.
 
 ## Usos de `ggplot2`
 
@@ -425,5 +425,4 @@ citation()
 citation("ggplot2")
 citation("ggExtra")
 ```
-
-
+Para más vea [galleria](https://r-graph-gallery.com)
