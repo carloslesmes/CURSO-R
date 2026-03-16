@@ -215,7 +215,7 @@ boxp =boxplot(datos,horizontal = TRUE,col = 'steelblue',main="datos")
 ```{r}
 str(boxp)
 boxp
-boxp[3] # outliers
+boxp$out # outliers
 ```
 ```{=typst}
 == Cuartiles
@@ -327,7 +327,7 @@ Otra medida de dispersión:
 $ S C = display(sum_(i=1)^(n) (X_i - overline(X))^2) $
 ```
 
-Es, en realidad, $n$ veces la varianza poblacional o $(n-1)$ veces la varianza muestral.
+Es, $n$ veces la varianza poblacional o $(n-1)$ veces la varianza muestral.
 
 ```{r}
 SC = sum(datos-mean(datos))^2
@@ -364,7 +364,7 @@ sd(datos)/mean(datos)*100
 Es el número de desviaciones estándar que separan un dato de la media aritmética. Para estandarizar o normalizar un dato:
 
 ```{=typst}
-$ Z=(x-M(X))/s(X) $
+$ Z=(X-M(X))/s(X) $
 ```
 
 ```{r}
@@ -483,9 +483,9 @@ Llamadas respectivamente
 
 SCT : suma de cuadrados total
 
-SCW : suma de cuadrados dentro
+SCW : suma de cuadrados dentro (within)
 
-SCB : suma de cuadrados entre
+SCB : suma de cuadrados entre (between)
 
 ## Ejercicio
 Creemos un conjunto de datos con 60 datos, dividido en 6 grupos:
@@ -494,10 +494,16 @@ Creemos un conjunto de datos con 60 datos, dividido en 6 grupos:
 m = matrix(rexp(60),nrow = 10,ncol = 6)
 m
 ```
-
-Calculemos la varianza de todos los datos:
 ```{r}
-var(c(m))
+pvar <- function(x) {
+  sum((x - mean(x))**2) / length(x)
+}
+```
+
+Calculemos la media y la varianza de todos los datos, llamadas media total y varianza total:
+```{r}
+MT = mean(c(m))
+VT = pvar(c(m))
 ```
 
 
@@ -512,7 +518,7 @@ m
 Media y varianza de los grupos (columnas de m):
 ```{r}
 ms = colMeans(m)
-vars = sapply(m, var)
+vars = sapply(m, pvar)
 ms;vars
 ```
 
@@ -520,11 +526,17 @@ ms;vars
 Media de las varianzas y varianza de las medias:
 ```{r}
 MV = mean(vars)
-VM = var(ms)
+VM = pvar(ms)
+MV
+VM
 ```
 
 ```{r}
-MV + VM
+VT1 = MV + VM
+VT1
+```
+```{r}
+all.equal(VT,VT1)
 ```
 
 ## Estadística bivariada
