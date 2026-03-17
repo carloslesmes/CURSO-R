@@ -82,6 +82,13 @@ geom_point(aes(x=displ, y=hwy, color=class),size=3)
 ggplot(mpg) +
 geom_point(aes(x=displ, y=hwy, color=class, size=displ))
 ```
+Si quiere guardar la gráfica, la función `ggsave()` guarda la última gráfica realizada, por ejemplo :
+
+```
+ggplot(mtcars, aes(mpg, wt)) +
+  geom_point()
+ggsave("mtcars.pdf", width = 20, height = 20, units = "cm")
+```
 
 ## Tercer paso 
 
