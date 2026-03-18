@@ -3106,6 +3106,7 @@ vertical-align: -.125em;
   <li><a href="#vuelos-más-rápidos-en-velocidad" id="toc-vuelos-más-rápidos-en-velocidad" class="nav-link" data-scroll-target="#vuelos-más-rápidos-en-velocidad"><span class="header-section-number">5.3</span> Vuelos más rápidos (en velocidad)</a></li>
   <li><a href="#vuelos-más-cortos-y-más-largos-en-distancia" id="toc-vuelos-más-cortos-y-más-largos-en-distancia" class="nav-link" data-scroll-target="#vuelos-más-cortos-y-más-largos-en-distancia"><span class="header-section-number">5.4</span> Vuelos más cortos y más largos en distancia</a></li>
   </ul></li>
+  <li><a href="#uso-de-pipes" id="toc-uso-de-pipes" class="nav-link" data-scroll-target="#uso-de-pipes"><span class="header-section-number">6</span> Uso de <code>pipes</code></a></li>
   </ul>
 </nav>
 </div>
@@ -8593,6 +8594,43 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
+</section>
+<section id="uso-de-pipes" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Uso de <code>pipes</code></h1>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">8</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.079442</code></pre>
+</div>
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span> <span class="sc">%&gt;%</span> <span class="fu">log</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.079442</code></pre>
+</div>
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sin</span>(<span class="fu">cos</span>(<span class="fu">log</span>(<span class="dv">5</span>)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.03862236</code></pre>
+</div>
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">%&gt;%</span> <span class="fu">log</span>() <span class="sc">%&gt;%</span> <span class="fu">cos</span>() <span class="sc">%&gt;%</span> <span class="fu">sin</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.03862236</code></pre>
+</div>
+</div>
+<p>Vea los primeros comandos, se pudieron haber escrito:</p>
+<pre><code>flights %&gt;% as_tibble()
+flights %&gt;% str()
+flights %&gt;% filter( month ==12, day == 1)</code></pre>
 </section>
 
 </main>

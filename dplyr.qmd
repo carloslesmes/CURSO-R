@@ -282,3 +282,19 @@ head(arrange(flights,desc(speed)))
 head(arrange(flights, desc(distance)))
 head(arrange(flights, distance))
 ```
+
+# Uso de `pipes`
+
+```{r}
+log(8)
+8 %>% log()
+sin(cos(log(5)))
+5 %>% log() %>% cos() %>% sin()
+```
+
+Vea los primeros comandos, se pudieron haber escrito:
+```
+flights %>% as_tibble()
+flights %>% str()
+flights %>% filter( month ==12, day == 1)
+```
