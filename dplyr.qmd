@@ -18,27 +18,28 @@ warning: false
 
 # Paquete `dplyr`
 
-Activamos los paquetes  una vez instalados con la función `install.packages()`  en la consola. Recomiendo que instalen el  metapaquete `tidyverse`que instala varios paquetes muy útiles en el análisis de datos, entre estos instala `dplyr`.
+Activamos los paquetes con `library()`después de instalados con la función `install.packages()`  en la consola. Recomiendo que instalen el  metapaquete `tidyverse`que instala varios paquetes muy útiles en el análisis de datos, entre estos instala `dplyr`.
 ```{r}
 library(dplyr)
 # suppressPackageStartupMessages(library(dplyr))
 library(nycflights23)
 ```
 
-Algunos paquetes, los más recientes, traen viñetas con documentación de ayuda sobre el paquete, para ver las viñetas del paquete `dplyr` vaya a la lengüeta `Packages` y dé clic en el paquete `dplyr` y vaya a `user guides, package vignettes and other documentation`. Inicalmente vea `dplyr::base` `HTML`. Se recomienda estudiarlas en orden. Obtenga información sobre las viñetas escribiendo en la consola `vignettes(package='dplyr')` y para ver la viñeta `base` escriba `vignettes('base',package='dplyr)` 
+Algunos paquetes, los más recientes, traen viñetas con documentación de ayuda sobre el paquete, para ver las viñetas del paquete `dplyr` vaya a la lengüeta `Packages` y dé clic en el paquete `dplyr` y vaya a `user guides, package vignettes and other documentation`. Inicalmente vea `dplyr::base` `HTML`. Se recomienda estudiarlas en orden. Obtenga información sobre las viñetas escribiendo en la consola `vignettes(package='dplyr')` y para ver la viñeta `base` escriba `vignettes('base',package='dplyr)` . El paquete `nycflights23` contiene el dataframe `flights` y lo convertimos a `tibble`: un dataframe con más propiedades.
 
 ```{r}
-flights <- as_tibble(flights) # para que imprima bonito
+flights <- as_tibble(flights) 
 head(flights)
 ```
 
-Estudiaremos las funciones básicas más útiles del paquete `dplyr` para la manipulación de datos.
+
+Estudiaremos las funciones básicas más útiles del paquete `dplyr` para la manipulación de un tibble o dataframe.
 
 1. La función `filter()` extrae las observaciones (filas) de un `dataframe` o `tibble`.
 2. `select()` selecciona columnas de un `tibble`.
-3. La función `arrange` reordena las filas de un `dataframe`.
+3. La función `arrange()` reordena las filas de un `dataframe`.
 4. `mutate()` crea nuevas funciones a partir de las ya existentes.
-5. `summarize()` colapsa un `tibble` hacía abajo para obtener resúmenes, va generalmente, acompañado de la función `group_by`.
+5. `summarize()` colapsa un `tibble` hacía abajo para obtener resúmenes, va generalmente, acompañado de la función `group_by()`.
 
 Recuerde que:
 
@@ -158,7 +159,7 @@ Hay varias funciones de ayuda *helpers* que se pueden usar dentro de `select()`:
 
 1. `starts_with("abc")` coincide con los nombres que empiezan con "abc"
 2. `ends_with("xyz")` coincide con los nombres que terminan con "xyz"
-3. `contains("ijk")` coincide con los nombres que contiene "ijk"
+3. `contains("ijk")` coincide con los nombres que contienen "ijk"
 
 Por ejemplo, sacar las variables que terminan con "delay"
 

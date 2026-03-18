@@ -4,7 +4,9 @@ author: "Carlos Lesmes"
 date: "`r Sys.Date()`"
 format:
   html:
-    theme: journal
+    theme:
+      light: flatly
+      dark: darkly
     toc: true
     toc_float: true
     number-sections: true
@@ -36,7 +38,8 @@ El paquete `dygraphs`.
 ```{r}
 library(dygraphs)
 library(xts)
-dygraph(matrix_sample) %>% dyRangeSelector()
+datos = as.xts(sample_matrix)
+dygraph(datos) %>% dyRangeSelector()
 ```
 
 

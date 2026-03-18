@@ -3130,7 +3130,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">12 de marzo de 2026</p>
+      <p class="date">18 de marzo de 2026</p>
     </div>
   </div>
   
@@ -3144,7 +3144,7 @@ vertical-align: -.125em;
 
 <section id="paquete-dplyr" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Paquete <code>dplyr</code></h1>
-<p>Activamos los paquetes una vez instalados con la función <code>install.packages()</code> en la consola. Recomiendo que instalen el metapaquete <code>tidyverse</code>que instala varios paquetes muy útiles en el análisis de datos, entre estos instala <code>dplyr</code>.</p>
+<p>Activamos los paquetes con <code>library()</code>después de instalados con la función <code>install.packages()</code> en la consola. Recomiendo que instalen el metapaquete <code>tidyverse</code>que instala varios paquetes muy útiles en el análisis de datos, entre estos instala <code>dplyr</code>.</p>
 <div class="cell">
 <details open class="code-fold">
 <summary>Código</summary>
@@ -3153,11 +3153,11 @@ vertical-align: -.125em;
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights23)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Algunos paquetes, los más recientes, traen viñetas con documentación de ayuda sobre el paquete, para ver las viñetas del paquete <code>dplyr</code> vaya a la lengüeta <code>Packages</code> y dé clic en el paquete <code>dplyr</code> y vaya a <code>user guides, package vignettes and other documentation</code>. Inicalmente vea <code>dplyr::base</code> <code>HTML</code>. Se recomienda estudiarlas en orden. Obtenga información sobre las viñetas escribiendo en la consola <code>vignettes(package=&#39;dplyr&#39;)</code> y para ver la viñeta <code>base</code> escriba <code>vignettes(&#39;base&#39;,package=&#39;dplyr)</code></p>
+<p>Algunos paquetes, los más recientes, traen viñetas con documentación de ayuda sobre el paquete, para ver las viñetas del paquete <code>dplyr</code> vaya a la lengüeta <code>Packages</code> y dé clic en el paquete <code>dplyr</code> y vaya a <code>user guides, package vignettes and other documentation</code>. Inicalmente vea <code>dplyr::base</code> <code>HTML</code>. Se recomienda estudiarlas en orden. Obtenga información sobre las viñetas escribiendo en la consola <code>vignettes(package=&#39;dplyr&#39;)</code> y para ver la viñeta <code>base</code> escriba <code>vignettes(&#39;base&#39;,package=&#39;dplyr)</code> . El paquete <code>nycflights23</code> contiene el dataframe <code>flights</code> y lo convertimos a <code>tibble</code>: un dataframe con más propiedades.</p>
 <div class="cell">
 <details open class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>flights <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(flights) <span class="co"># para que imprima bonito</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>flights <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(flights) </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(flights)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -3339,13 +3339,13 @@ vertical-align: -.125em;
 </div>
 </div>
 </div>
-<p>Estudiaremos las funciones básicas más útiles del paquete <code>dplyr</code> para la manipulación de datos.</p>
+<p>Estudiaremos las funciones básicas más útiles del paquete <code>dplyr</code> para la manipulación de un tibble o dataframe.</p>
 <ol type="1">
 <li>La función <code>filter()</code> extrae las observaciones (filas) de un <code>dataframe</code> o <code>tibble</code>.</li>
 <li><code>select()</code> selecciona columnas de un <code>tibble</code>.</li>
-<li>La función <code>arrange</code> reordena las filas de un <code>dataframe</code>.</li>
+<li>La función <code>arrange()</code> reordena las filas de un <code>dataframe</code>.</li>
 <li><code>mutate()</code> crea nuevas funciones a partir de las ya existentes.</li>
-<li><code>summarize()</code> colapsa un <code>tibble</code> hacía abajo para obtener resúmenes, va generalmente, acompañado de la función <code>group_by</code>.</li>
+<li><code>summarize()</code> colapsa un <code>tibble</code> hacía abajo para obtener resúmenes, va generalmente, acompañado de la función <code>group_by()</code>.</li>
 </ol>
 <p>Recuerde que:</p>
 <ol type="1">
@@ -5899,7 +5899,7 @@ vertical-align: -.125em;
 <ol type="1">
 <li><code>starts_with(&quot;abc&quot;)</code> coincide con los nombres que empiezan con “abc”</li>
 <li><code>ends_with(&quot;xyz&quot;)</code> coincide con los nombres que terminan con “xyz”</li>
-<li><code>contains(&quot;ijk&quot;)</code> coincide con los nombres que contiene “ijk”</li>
+<li><code>contains(&quot;ijk&quot;)</code> coincide con los nombres que contienen “ijk”</li>
 </ol>
 <p>Por ejemplo, sacar las variables que terminan con “delay”</p>
 <div class="cell">
