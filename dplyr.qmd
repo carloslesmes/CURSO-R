@@ -4,12 +4,16 @@ author: Carlos Lesmes
 date: "`r Sys.Date()`"
 format:
   html:
-    theme: materia
+    theme: 
+      light: flatly
+      dark: darkly
     toc: true
     toc_float: true
     toc-depth: 2
     number-sections: true
     code-fold: show
+    code-overflow: scroll
+    code-tools: true
     df-print: kable
     embed-resources: true
 lang : es
@@ -290,6 +294,7 @@ log(8)
 8 %>% log()
 sin(cos(log(5)))
 5 %>% log() %>% cos() %>% sin()
+
 ```
 
 Vea los primeros comandos, se pudieron haber escrito:
@@ -297,4 +302,28 @@ Vea los primeros comandos, se pudieron haber escrito:
 flights %>% as_tibble()
 flights %>% str()
 flights %>% filter( month ==12, day == 1)
+dframe <- flights %>% select(month, day) %>% filter(distance < 500)
 ```
+atajo de teclado: `%>%` control/command shift m 
+
+# Más ejemplos
+
+Crear un dataframe por cada especie en el dataframe iris:
+```{r}
+iris <- iris
+lista_df <- iris %>% 
+  group_by(Species) %>% 
+  group_split()
+lista_df
+setosa <- lista_df[[1]]
+```
+Cree un dataframe que, por `Species`  tenga la media de `Sepal.Length` y el número de datos 
+
+
+```{r}
+media_Sepal_por_especie <- iris %>% 
+  group_by(Species) %>% 
+  summarize(mean=mean(Sepal.Length), n=n())
+media_Sepal_por_especie
+```
+
