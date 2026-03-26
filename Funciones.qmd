@@ -32,9 +32,8 @@ Cuando se escribe una función sin `()` R devuelve información sobre la variabl
 var
 ```
 
-
-## User-Defined Functions
-Los usuarios pueden crear sus propias funciones para que no tenga que repetir código.Ell formato de una función en R es:
+## Funciones definidas por el usuario
+Los usuarios pueden crear sus propias funciones para que no tenga que repetir código.El formato de una función en R es:
 
 ```
 nombre <- function(parameters){
@@ -125,13 +124,40 @@ print(f(4))
 print(f(-2))
 curve(f,main="Función f")
 ```
-## Búsqueda de objetos en R
+
+## Función genérica, métodos y método de despacho.
+
+Una *función genérica* en R es una función que tiene un comportamiento diferente según el argumento que se le dé. En R, un *método* es una implementación específica de una función genérica que es seleccionado automáticamente y ejecutada basándose en la clase (class) de objeto que se dé. El *método de despacho* es el proceso a usar para seleccionar el método apropiado. 
+
+¿A qué clase (class) de objetos le podemos sacar la función `summary`? 
+
 ```{r}
-search()
+head(methods(summary),10)
+```
+¿Es genérica?
+```{r}
+library(methods)
+isGeneric("summary")
+```
+En R, una función *no genérica* es una función que lleva a cabo un cálculo específico y no cambia su comportamiento de de acuerdo con la clase de sus argumentos.
+
+```{r}
+mi_funcion <- function(x) {
+  x + 1
+}
+isGeneric("mi_funcion") 
+```
+```{r}
+methods(mi_funcion)
 ```
 
 ## Funciones con el mismo nombre en dos paquetes.
+El orden en que R busca las funciones del ambiente (environment) de acuerdo con los paquetes activados:
 
+### Búsqueda de objetos en R
+```{r}
+search()
+```
 La función `filter()` está en dos paquetes: `dplyr` y `base`, para distinguirlas se escribe el nombre del paquete y `::`.
 ```
 dplyr::filter()
@@ -139,7 +165,7 @@ base::filter()
 ```
 ## Pipes
 
-El operador pipeline `%>%` es útil para concatenar múltiples operaciones. `x %>% f` es equivalente a `f(x)`.
+El operador pipeline `|>` (base), `%>%` (magrittr) es útil para concatenar múltiples operaciones. `x %>% f` es equivalente a `f(x)`.
 
 ### Ejemplos
 
@@ -151,6 +177,31 @@ log(5)
 ```{r}
 3 %>% sin %>% cos %>% log10()
 log10(cos(sin(3)))
+```
+```{r}
+iris |> head()
+```
+
+## Funciones que crean funciones
+
+```{r}
+potencias <- function(exponente) {
+  function(x) {
+    x ^ exponente 
+  }
+}
+cuadrado <- potencias(2)
+cubo <- potencias(3)
+#use las nuevas funciones
+print(cuadrado(4)) 
+print(cubo(4))   
+```
+## Funciones anónimas
+
+Funciones sin nombre
+
+```{r}
+(function(x, y){ z <- x^2 + y^2; x+y+z })(0:7, 1)
 ```
 
 

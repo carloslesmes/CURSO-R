@@ -1,0 +1,151 @@
+--- 
+title: "Distribución de Weibull"
+author: "Carlos Lesmes"
+format: 
+  dashboard:
+    css: style.css
+    orientation: rows
+    nav-buttons:
+      - icon: github
+        href: https://github.com/carloslesmes/
+        aria-label: GitHub
+      - icon: twitter
+        href: https://x.com/carloslesmesl
+        aria-label: LinkedIn
+      - icon: youtube
+        href: https://youtube.com/
+        aria-label: YouTube
+logo: images/logoUsta.png
+logo-alt: logo Usta
+---
+
+# Distribución de Weibull 
+
+:::{.card height="35%"} 
+Distribución de **Weibull**
+
+La distribución tiene dos *parámetros*: forma $k > 0$ (shape) y escala $c >0$ (scale), con función de densidad:
+
+$$f(v)=\frac{k}{c}\left(\frac{v}{c}\right )^{k-1}e^{\left[-(\frac{v}{c})^{k}\right]}; \quad x>0$$
+
+y función de distribución:
+
+$$F(v)=1-e^{\left[-(\frac{v}{c})^{k}\right]}$$
+:::
+
+## Plot {height="65%"}
+```{r}
+#| title: Distribución de Weibull
+library(ggplot2)
+ggplot(data.frame(x = c(0 , 5)), aes(x = x)) + 
+  xlim(c(0 , 5)) + 
+  ylim(0, .7) +
+  stat_function(fun = dweibull, args = list(shape = 3, scale = 2), geom = "area", 
+                fill = "green", alpha = 0.25) + 
+  stat_function(fun = dweibull, args = list(shape = 3, scale = 2)) + 
+  labs(x = "\n x", y = "f(x) \n", 
+       title = "Distribución Weibull  con \n shape=3 y scale = 2 \n") + 
+  theme(plot.title = element_text(hjust = 0.5), 
+        axis.title.x = element_text(face="bold", colour="blue", size = 12),
+        axis.title.y = element_text(face="bold", colour="blue", size = 12))
+```
+
+# dweibull
+```{r}
+#| title: Distribución de Weibull shape=3 scale=2
+base <-
+  ggplot() +
+  xlim(0, 5)
+df = data.frame(x1=2.5,y1=0,x2=2.5,y2=.38)
+base + geom_function(fun = dweibull, args=list(shape=3,scale=2))+
+    geom_segment(aes(x=x1,y=y1,xend=x2,yend=y2), colour= 'red',data=df) +
+    annotate("text", x = 2, y = .18, label = "dweibull(x1,3,2) \n f(x1)")
+```
+
+# pweibull
+```{r}
+#| title: Distribución de Weibull shape=3 scale=2
+base <-
+  ggplot() +
+  xlim(0, 5)
+df = data.frame(x1=2.5,y1=0,x2=2.5,y2=.38)
+base + geom_function(fun = dweibull, args=list(shape=3,scale=2))+
+    geom_segment(aes(x=x1,y=y1,xend=x2,yend=y2), colour='red',data=df) +
+    annotate("text", x = 1.7, y = .2, label = "pweibull(x1,3,2) \n P(X <= x1)")
+```
+
+# qweibull
+```{r}
+#| title: Distribución de Weibull shape=3 scale=2
+base <-
+  ggplot() +
+  xlim(0, 5)
+df = data.frame(qweibull=2.5,y1=0,x2=2.5,y2=.38)
+base + geom_function(fun = dweibull, args=list(shape=3,scale=2))+
+    geom_segment(aes(x=qweibull,y=y1,xend=x2,yend=y2), colour='red',data=df) +
+    annotate("text", x = 1.75, y = .25, label = "q")
+```
+
+# rweibull 
+
+```{r}
+#| title: Generación de 1000 números aleatorios Distribución de Weibull shape=3 scale=2
+data = data.frame(rweib=rweibull(1000,3,2))
+ggplot(data = data, aes(x = rweib)) +
+    geom_histogram(fill='blue',colour='black') +
+    ggtitle('Generación de números aleatorios') +
+    xlab('Números aleatorios') + ylab('Frecuencia')
+```
+
+# Valores 
+
+## {height="25%"}
+```{r}
+#| title: cálculo de valores
+
+uno = format(dweibull(2.5,3,2), digits=7, nsmall=5)
+dos = format(pweibull(2.5,3,2),digits=7, nsmall=5)
+tres = format(qweibull(.6,3,2), digits=7, nsmall=5)
+cua = format(rweibull(10,3,2), digits=7, nsmall=5)
+```
+
+```{r}
+#| content: valuebox
+#| title: 'Altura'
+#| icon: thermometer-high
+#| color: info
+
+list(value= paste("dweibull(5,3,2)",uno))
+```
+
+```{r}
+#| content: valuebox
+#| title: 'P(X < x)'
+#| icon: vector-pen
+#| color: warning
+
+list(value= paste("pweibull(5,3,2)",dos))
+```
+
+```{r}
+#| content: valuebox
+#| title: 'Percentil 60'
+#| icon: wind
+#| color: danger
+
+list(value= paste("qweibull(.6,3,2)",tres))
+```
+
+```{r}
+#| content: valuebox
+#| title: 'Número aleatorio'
+#| icon: umbrella
+#| color: success
+
+list(value= paste("rweibull(1,3,2)",cua))
+```
+
+
+
+
+

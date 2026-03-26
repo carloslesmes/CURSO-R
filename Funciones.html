@@ -3090,15 +3090,20 @@ vertical-align: -.125em;
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">1</span> Introducción</a></li>
   <li><a href="#functions-incorporadas" id="toc-functions-incorporadas" class="nav-link" data-scroll-target="#functions-incorporadas"><span class="header-section-number">2</span> Functions incorporadas</a></li>
-  <li><a href="#user-defined-functions" id="toc-user-defined-functions" class="nav-link" data-scroll-target="#user-defined-functions"><span class="header-section-number">3</span> User-Defined Functions</a></li>
+  <li><a href="#funciones-definidas-por-el-usuario" id="toc-funciones-definidas-por-el-usuario" class="nav-link" data-scroll-target="#funciones-definidas-por-el-usuario"><span class="header-section-number">3</span> Funciones definidas por el usuario</a></li>
   <li><a href="#ejemplos-de-funciones" id="toc-ejemplos-de-funciones" class="nav-link" data-scroll-target="#ejemplos-de-funciones"><span class="header-section-number">4</span> Ejemplos de Funciones</a></li>
   <li><a href="#funciones-con-condiciones" id="toc-funciones-con-condiciones" class="nav-link" data-scroll-target="#funciones-con-condiciones"><span class="header-section-number">5</span> Funciones con condiciones</a></li>
-  <li><a href="#búsqueda-de-objetos-en-r" id="toc-búsqueda-de-objetos-en-r" class="nav-link" data-scroll-target="#búsqueda-de-objetos-en-r"><span class="header-section-number">6</span> Búsqueda de objetos en R</a></li>
-  <li><a href="#funciones-con-el-mismo-nombre-en-dos-paquetes." id="toc-funciones-con-el-mismo-nombre-en-dos-paquetes." class="nav-link" data-scroll-target="#funciones-con-el-mismo-nombre-en-dos-paquetes."><span class="header-section-number">7</span> Funciones con el mismo nombre en dos paquetes.</a></li>
+  <li><a href="#función-genérica-métodos-y-método-de-despacho." id="toc-función-genérica-métodos-y-método-de-despacho." class="nav-link" data-scroll-target="#función-genérica-métodos-y-método-de-despacho."><span class="header-section-number">6</span> Función genérica, métodos y método de despacho.</a></li>
+  <li><a href="#funciones-con-el-mismo-nombre-en-dos-paquetes." id="toc-funciones-con-el-mismo-nombre-en-dos-paquetes." class="nav-link" data-scroll-target="#funciones-con-el-mismo-nombre-en-dos-paquetes."><span class="header-section-number">7</span> Funciones con el mismo nombre en dos paquetes.</a>
+  <ul class="collapse">
+  <li><a href="#búsqueda-de-objetos-en-r" id="toc-búsqueda-de-objetos-en-r" class="nav-link" data-scroll-target="#búsqueda-de-objetos-en-r"><span class="header-section-number">7.1</span> Búsqueda de objetos en R</a></li>
+  </ul></li>
   <li><a href="#pipes" id="toc-pipes" class="nav-link" data-scroll-target="#pipes"><span class="header-section-number">8</span> Pipes</a>
   <ul class="collapse">
   <li><a href="#ejemplos" id="toc-ejemplos" class="nav-link" data-scroll-target="#ejemplos"><span class="header-section-number">8.1</span> Ejemplos</a></li>
   </ul></li>
+  <li><a href="#funciones-que-crean-funciones" id="toc-funciones-que-crean-funciones" class="nav-link" data-scroll-target="#funciones-que-crean-funciones"><span class="header-section-number">9</span> Funciones que crean funciones</a></li>
+  <li><a href="#funciones-anónimas" id="toc-funciones-anónimas" class="nav-link" data-scroll-target="#funciones-anónimas"><span class="header-section-number">10</span> Funciones anónimas</a></li>
   </ul>
 </nav>
 </div>
@@ -3175,14 +3180,14 @@ vertical-align: -.125em;
         stopifnot(is.atomic(y))
     .Call(C_cov, x, y, na.method, FALSE)
 }
-&lt;bytecode: 0x13e7f1b40&gt;
+&lt;bytecode: 0x13aee51f0&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 </div>
 </section>
-<section id="user-defined-functions" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="user-defined-functions"><span class="header-section-number">3</span> User-Defined Functions</h2>
-<p>Los usuarios pueden crear sus propias funciones para que no tenga que repetir código.Ell formato de una función en R es:</p>
+<section id="funciones-definidas-por-el-usuario" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="funciones-definidas-por-el-usuario"><span class="header-section-number">3</span> Funciones definidas por el usuario</h2>
+<p>Los usuarios pueden crear sus propias funciones para que no tenga que repetir código.El formato de una función en R es:</p>
 <pre><code>nombre &lt;- function(parameters){
   cuerpo de la función 
 }</code></pre>
@@ -3382,12 +3387,66 @@ NULL</code></pre>
 </div>
 </div>
 </section>
-<section id="búsqueda-de-objetos-en-r" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="búsqueda-de-objetos-en-r"><span class="header-section-number">6</span> Búsqueda de objetos en R</h2>
+<section id="función-genérica-métodos-y-método-de-despacho." class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="función-genérica-métodos-y-método-de-despacho."><span class="header-section-number">6</span> Función genérica, métodos y método de despacho.</h2>
+<p>Una <em>función genérica</em> en R es una función que tiene un comportamiento diferente según el argumento que se le dé. En R, un <em>método</em> es una implementación específica de una función genérica que es seleccionado automáticamente y ejecutada basándose en la clase (class) de objeto que se dé. El <em>método de despacho</em> es el proceso a usar para seleccionar el método apropiado.</p>
+<p>¿A qué clase (class) de objetos le podemos sacar la función <code>summary</code>?</p>
 <div class="cell">
 <details open class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">search</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">methods</span>(summary),<span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] &quot;summary.aov&quot;                   &quot;summary.aovlist&quot;              
+ [3] &quot;summary.aspell&quot;                &quot;summary.check_packages_in_dir&quot;
+ [5] &quot;summary.connection&quot;            &quot;summary.data.frame&quot;           
+ [7] &quot;summary.Date&quot;                  &quot;summary.default&quot;              
+ [9] &quot;summary.difftime&quot;              &quot;summary.ecdf&quot;                 </code></pre>
+</div>
+</div>
+<p>¿Es genérica?</p>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(methods)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">isGeneric</span>(<span class="st">&quot;summary&quot;</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>En R, una función <em>no genérica</em> es una función que lleva a cabo un cálculo específico y no cambia su comportamiento de de acuerdo con la clase de sus argumentos.</p>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mi_funcion <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">isGeneric</span>(<span class="st">&quot;mi_funcion&quot;</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(mi_funcion)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>no methods found</code></pre>
+</div>
+</div>
+</section>
+<section id="funciones-con-el-mismo-nombre-en-dos-paquetes." class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="funciones-con-el-mismo-nombre-en-dos-paquetes."><span class="header-section-number">7</span> Funciones con el mismo nombre en dos paquetes.</h2>
+<p>El orden en que R busca las funciones del ambiente (environment) de acuerdo con los paquetes activados:</p>
+<section id="búsqueda-de-objetos-en-r" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="búsqueda-de-objetos-en-r"><span class="header-section-number">7.1</span> Búsqueda de objetos en R</h3>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">search</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;.GlobalEnv&quot;        &quot;package:stats&quot;     &quot;package:graphics&quot; 
@@ -3395,30 +3454,28 @@ NULL</code></pre>
 [7] &quot;package:methods&quot;   &quot;Autoloads&quot;         &quot;package:base&quot;     </code></pre>
 </div>
 </div>
-</section>
-<section id="funciones-con-el-mismo-nombre-en-dos-paquetes." class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="funciones-con-el-mismo-nombre-en-dos-paquetes."><span class="header-section-number">7</span> Funciones con el mismo nombre en dos paquetes.</h2>
 <p>La función <code>filter()</code> está en dos paquetes: <code>dplyr</code> y <code>base</code>, para distinguirlas se escribe el nombre del paquete y <code>::</code>.</p>
 <pre><code>dplyr::filter()
 base::filter()</code></pre>
 </section>
+</section>
 <section id="pipes" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="pipes"><span class="header-section-number">8</span> Pipes</h2>
-<p>El operador pipeline <code>%&gt;%</code> es útil para concatenar múltiples operaciones. <code>x %&gt;% f</code> es equivalente a <code>f(x)</code>.</p>
+<p>El operador pipeline <code>|&gt;</code> (base), <code>%&gt;%</code> (magrittr) es útil para concatenar múltiples operaciones. <code>x %&gt;% f</code> es equivalente a <code>f(x)</code>.</p>
 <section id="ejemplos" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="ejemplos"><span class="header-section-number">8.1</span> Ejemplos</h3>
 <div class="cell">
 <details open class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.609438</code></pre>
 </div>
 <details open class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">%&gt;%</span> log</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">%&gt;%</span> log</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.609438</code></pre>
@@ -3427,20 +3484,125 @@ base::filter()</code></pre>
 <div class="cell">
 <details open class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">%&gt;%</span> sin <span class="sc">%&gt;%</span> cos <span class="sc">%&gt;%</span> <span class="fu">log10</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">%&gt;%</span> sin <span class="sc">%&gt;%</span> cos <span class="sc">%&gt;%</span> <span class="fu">log10</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.004338886</code></pre>
 </div>
 <details open class="code-fold">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log10</span>(<span class="fu">cos</span>(<span class="fu">sin</span>(<span class="dv">3</span>)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log10</span>(<span class="fu">cos</span>(<span class="fu">sin</span>(<span class="dv">3</span>)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.004338886</code></pre>
 </div>
 </div>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Sepal.Length</th>
+<th style="text-align: right;">Sepal.Width</th>
+<th style="text-align: right;">Petal.Length</th>
+<th style="text-align: right;">Petal.Width</th>
+<th style="text-align: left;">Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: left;">setosa</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: left;">setosa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: left;">setosa</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: left;">setosa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: left;">setosa</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: left;">setosa</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </section>
+</section>
+<section id="funciones-que-crean-funciones" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="funciones-que-crean-funciones"><span class="header-section-number">9</span> Funciones que crean funciones</h2>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>potencias <span class="ot">&lt;-</span> <span class="cf">function</span>(exponente) {</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">^</span> exponente </span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>cuadrado <span class="ot">&lt;-</span> <span class="fu">potencias</span>(<span class="dv">2</span>)</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>cubo <span class="ot">&lt;-</span> <span class="fu">potencias</span>(<span class="dv">3</span>)</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="co">#use las nuevas funciones</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cuadrado</span>(<span class="dv">4</span>)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16</code></pre>
+</div>
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cubo</span>(<span class="dv">4</span>))   </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 64</code></pre>
+</div>
+</div>
+</section>
+<section id="funciones-anónimas" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="funciones-anónimas"><span class="header-section-number">10</span> Funciones anónimas</h2>
+<p>Funciones sin nombre</p>
+<div class="cell">
+<details open class="code-fold">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>(<span class="cf">function</span>(x, y){ z <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>; x<span class="sc">+</span>y<span class="sc">+</span>z })(<span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  4  8 14 22 32 44 58</code></pre>
+</div>
+</div>
 </section>
 
 </main>

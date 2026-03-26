@@ -1,5 +1,5 @@
 ---
-title: Paquete `Lattice` de R
+title: Paquete `lattice` de R
 subtitle: y sus extensiones
 author: Carlos Lesmes
 date: "`r Sys.Date()`"
@@ -9,20 +9,52 @@ format:
     toc: true
     toc_float: true
     number-sections: true
+    code-tools: true
     code-fold: show
+    code-overflow: wrap
     df-print: kable
+    embed-resources: true
 lang : es
 warning: false
 ---
+# Paquete `lattice` para visualización
 
+Activamos el paquete `lattice` y vemos su configuración:
 ```{r}
 library(lattice)
 show.settings()
 ```
+# Sintaxis básica
+La mayoría de las funciones de `lattice` siguen el siguiente formato:
+```
+graph_function(formula, data, options)
+```
+La clave de `lattice` es la formula:
+
+Vea `help(~)` y `help(formula)`.
+
+y ~ x muestra la relación entre $x$ y $y$.
+
+~ x muestra la distribución of x.
+
+y ~ x | A (parte que condiciona) muestra $y$ vs $x$ para cada nivel del factor A en una cuadrícula.
+
+y ~ x | A * B condiciona la gráfica por combinaciones de los factores A y B. 
+
+A veces y ~ x | A + B.
+
+Un factor en R es una estructura de datos para manejar variables categóricas. Las variables categóricas son datos que tienen un número limitado y fijo de valores llamados niveles. 
+
+```{r}
+direccion <- c("Norte", "Oeste", "Sur", "Este", "Norte","Sur","Este")
+direccion_factor <- factor(direccion) # convertido a factor
+print(direccion_factor)
+levels(direccion_factor)
+```
 
 # Funciones más comunes en `lattice`
 
-There are several functions available in the Lattice package that can be deployed for several purposes. Some of the most common functions used are the following:
+Hay muchas funciones en el paquete `lattice` para varios propósitos. Las más comunes son:
 
 ```
 xyplot()
@@ -38,10 +70,24 @@ qqmath()
 qq()
 ```
 
+Consideremos el conjunto `iris`
+
+![iris](iris.png)
+
+```{r}
+str(iris)
+```
+
 ```{r}
 xyplot(Sepal.Length ~ Petal.Length,
        data = iris)
 ```
+```{r}
+xyplot(Sepal.Length + Sepal.Width ~ Petal.Length + Petal.Width | Species,
+       data = iris, scales = "free", layout = c(2, 2),
+       auto.key = list(x = .75, y = .75, corner = c(0.5, 0.5)))
+```
+
 ## Agregando categorías
 
 ```{r}
@@ -66,9 +112,16 @@ xyplot(Sepal.Length ~ Petal.Length | Species,
        group = Species,
        data = iris,
        type = c("p", "smooth"),
-       scales = "free")
+       scales = "free", par.settings = list(strip.background = list(col = c('green'))))
 ```
-
+```{r}
+plot1 <- xyplot(Sepal.Length ~ Petal.Length | Species,
+       group = Species,
+       data = iris,
+       type = c("p", "smooth"),
+       scales = "free", par.settings = list(strip.background = list(col = c('green'))))
+suppressWarnings(print(plot1))
+```
 ## Nube de puntos
 
 ```{r}
@@ -91,6 +144,11 @@ bwplot(Sepal.Length ~ Species, data=iris)
 
 Con el conjunto de datos `ToothGrowth`
 ```{r}
+str(ToothGrowth)
+```
+
+
+```{r}
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 bwplot(len ~ dose, data = ToothGrowth,
        xlab = "Dose",
@@ -102,7 +160,7 @@ bwplot(len ~ supp|dose,
        data = ToothGrowth,
        layout = c(3,1),
        xlab = "Dose",
-       ylab = "Length")
+       ylab = "Length",, par.settings = list(strip.background = list(col = c('green'))))
 ```
 
 ```{r}
@@ -118,6 +176,89 @@ dotplot(len ~ dose,
         xlab = "Dose",
         ylab = "Length")
 ```
+## Un conjunto más grande
+
+Leemos el archivo:
+```{r}
+students <- read.csv("https://userpage.fu-berlin.de/soga/data/raw-data/students.csv")
+str(students)
+```
+Escogemos solo 100 filas
+```{r}
+students100 <- students[1:100, ]
+xyplot(height ~ weight | gender,
+  data = students100,
+  ylab = "Height in cm",
+  xlab = "Weight in kg", par.settings = list(strip.background = list(col = c('green')))
+)
+```
+
+```{r}
+xyplot(height ~ weight | religion,
+  data = students100,
+  ylab = "Height in cm",
+  xlab = "Weight in kg", par.settings = list(strip.background = list(col = c('green')))
+)
+```
+Agregar colores a cada panel
+```{r}
+xyplot(height ~ weight | religion * gender,
+  data = students100,
+  ylab = "Height in cm",
+  xlab = "Weight in kg", par.settings = list(strip.background = list(col = c('salmon', 'steelblue')))
+)
+```
+
+```{r}
+plot2 <- xyplot(Sepal.Length ~ Petal.Length | Species, 
+       data = iris,
+       par.settings = list(strip.background = list(col = c('lightseagreen'))),
+       main = "Iris Dimensions by Species",
+       xlab = "Petal Length", 
+       ylab = "Sepal Length",
+       type = c("p", "smooth")) # 'p' for points, 'smooth' for a regression line
+suppressWarnings(print(plot2))
+```
+# El conjunto de datos `Titanic`
+
+Los datos vienen en un arreglo 4-dimensional:
+
+```{r}
+str(Titanic)
+```
+
+La mejor forma de verlo es transformandolo en dataframe.
+
+```{r}
+Tdf <- as.data.frame(Titanic)
+Tdf
+```
+
+
+
+```{r}
+barchart(Class ~ Freq | Sex + Age, data=as.data.frame(Titanic), groups=Survived, stack=TRUE, layout=c(4,1), auto.key=list(title="Survived", columns=2))
+```
+# Visualización de una variable
+
+La función `densityplot` suaviza (smooth) el histograma de una variable usando un kernel. Vea [smooth-kernel](https://en.wikipedia.org/wiki/Kernel_smoother)
+
+```{r}
+densityplot(~ len, data = ToothGrowth, plot.points = FALSE)
+```
+Usemos el conjunto `faithful`
+
+```{r}
+str(faithful)
+```
+
+```{r}
+densityplot( ~ eruptions, data=faithful)
+```
+
+```{r}
+densityplot( ~ eruptions, data=faithful, kernel = "rect", bw=0.2, plot.points ="rug", n=200)
+```
 
 ## Histograma
 
@@ -126,31 +267,54 @@ histogram(~ len, data = ToothGrowth,
           breaks = 20)
 ```
 
-```{r}
-students <- read.csv("https://userpage.fu-berlin.de/soga/data/raw-data/students.csv")
-str(students)
-```
-```{r}
-students100 <- students[1:100, ]
-xyplot(height ~ weight | gender,
-  data = students100,
-  ylab = "Height in cm",
-  xlab = "Weight in kg"
-)
-```
-```{r}
-xyplot(height ~ weight | religion,
-  data = students100,
-  ylab = "Height in cm",
-  xlab = "Weight in kg"
-)
-```
+## Conjunto `VADeaths`.
 
 ```{r}
-xyplot(height ~ weight | religion * gender,
-  data = students100,
-  ylab = "Height in cm",
-  xlab = "Weight in kg"
-)
+str(VADeaths)
+class(VADeaths)
+VADeaths
+```
+```{r}
+methods("mean")
+methods("dotplot")
+```
+
+
+
+```{r}
+dotplot(VADeaths, groups=FALSE)
+```
+```{r}
+barchart(VADeaths, groups=FALSE, layout=c(1,4), aspect=0.4, reference=FALSE, main="Tasa de mortalidad en Virginia",xlab="tasa(por 100)")
+```
+## Más 
+
+```{r}
+xyplot(lat ~ long | cut(depth,2), data = quakes)
+```
+```{r}
+xyplot(lat ~ long | cut(depth,3), data = quakes, aspect="iso", pch=".", cex=2, type=c("p","g"),xlab="longitud", ylab = "latitud")
+```
+```{r}
+xyplot(lat ~ long, data=quakes,groups= cut(depth,breaks=quantile(depth, ppoints(4,1))), auto.key = list(columns=3, title="Profundidad"), xlab="longitud", ylab = "latitud")
+```
+```{r}
+library(latticeExtra)
+data(SeatacWeather,package="latticeExtra")
+str(SeatacWeather)
+```
+```{r}
+xyplot(min.temp + max.temp +precip ~ day | month, ylab="Temperatura y lluvia", data = SeatacWeather, type="l",lty=1,col="black")
+```
+```{r}
+str(USArrests)
+```
+
+
+```{r}
+splom(USArrests)
+```
+```{r}
+splom(~ USArrests[c(3,1,2,4)] | state.region, pscales=0, type=c("g","p","smooth"))
 ```
 

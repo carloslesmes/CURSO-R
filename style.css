@@ -1,0 +1,30 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.6;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2em;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+h1 {
+  color: #2c3e50;
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.2em;
+}
+
+h2 {
+  color: #34495e;
+  font-size: 2em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h3 {
+  color: #465d71;
+  font-size: 1.5em;
+  margin-top: 1.2em;
+}

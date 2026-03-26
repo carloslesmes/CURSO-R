@@ -1,0 +1,57 @@
+---
+title: Arreglos
+author: Carlos Lesmes
+date: "`r Sys.Date()`"
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly
+    toc: true
+    toc_float: true
+    number-sections: true
+    code-fold: show
+    code-tools: true
+    code-copy: hover
+    code-overflow: wrap
+    embed-resources: true
+reference-location: margin
+lang : es
+bibliography: yaml.bib
+---
+
+```{r}
+arreglo <- array( 
+c(0, 0, 35, 0, 0, 0, 17, 0,118, 154, 387, 670, 4, 13, 89, 3,0, 0, 13, 0, 0, 0, 14, 0,57, 80, 140, 192, 0, 0, 76, 20),
+dim = c(4, 2, 2, 2),
+dimnames = list(
+Class = c("1st", "2nd", "3rd", "Crew"),
+Sex = c("Male", "Female"),
+Age = c("Child", "Adult"),
+Survived = c("No", "Yes")
+))
+str(arreglo)
+```
+```{r}
+df1= as.data.frame(arreglo)
+df1
+ftable(arreglo)
+```
+
+```{r}
+str(Titanic)
+df2=as.data.frame(Titanic)
+df2
+ftable(Titanic)
+```
+```{r}
+margin.table(Titanic, 1)  # totals by class
+```
+
+```{r}
+margin.table(Titanic, 2) 
+```
+```{r}
+as.data.frame.table(arreglo)
+```
+
